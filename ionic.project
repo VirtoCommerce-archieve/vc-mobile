@@ -1,0 +1,12 @@
+{
+  "name": "ionShop",
+  "app_id": "2366dc4b",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

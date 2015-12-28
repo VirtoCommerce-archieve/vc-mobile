@@ -1,0 +1,34 @@
+<!--
+  This template loads for the 'home' state (app.js)
+  'slides' and 'products' is $scope variable in HomeCtrl
+-->
+<ion-view view-title="Home">
+  <ion-content class="">
+    <!-- Slider using slide box -->
+    <ion-slide-box class="full-image" auto-play="true">
+
+      <ion-slide ng-repeat="slide in slides">
+        <div class="box">
+          <img class="full-image" src="{{ slide.url }}" alt=""/>
+        </div>
+      </ion-slide>
+
+    </ion-slide-box>
+
+    <h4 class="text-center">Discover our topsellers</h4>
+
+    <!-- List of items: 2 columns-->
+    <div class="row flex-wrap">
+      <div class="col-50" ng-repeat="item in products">
+        <a ui-sref="detail">
+          <img class="full-image" src="{{ item.thumb }}" alt=""/>
+          <span class="product-title">{{ item.name }}</span>
+          <span class="price dark" ng-if="!item.sale_price">${{ item.price }}</span>
+          <span class="price dark" ng-if="item.sale_price">${{ item.sale_price}}</span>
+          <span class="old-price" ng-if="item.sale_price">${{ item.price }}</span>
+        </a>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

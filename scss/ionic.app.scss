@@ -1,0 +1,120 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// overwrite default color
+$positive:                        #2ABB9C !default;
+$calm:                            #2EC9A7 !default;
+$energized:                       #F38B4C !default;
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+// Include all of Ionic
+@import "../www/lib/ionic/scss/ionic";
+
+a {
+  text-decoration: none;
+}
+// common class
+.pull-right {
+  float: right;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+
+  .col-50 {
+    padding: 5px;
+  }
+}
+
+// header
+.button .header-badge {
+  color: $light;
+  position: absolute;
+  top: 0.2em;
+  left: 0.7em;
+  font-size: 0.8em;
+}
+
+// login page
+.social-button {
+  color: #FFF;
+  i {
+    font-size: 1.8em;
+    vertical-align: middle;
+    margin-left: 0.5em;
+  }
+
+  span {
+    vertical-align: middle;
+  }
+}
+
+.facebook-login {
+  background: #3B5999;
+}
+
+.twitter-login {
+  background: #00ACEE;
+}
+
+// product style
+.product-title {
+  color: $positive;
+  font-size: 1.2em;
+  display: block;
+}
+.old-price {
+  color: #8f8f8f;
+  text-decoration: line-through;
+  font-size: 0.8em;
+}
+.slider-pager .slider-pager-page {
+  color: $light;
+}
+.item-options {
+  select {
+    width: 100%;
+    padding: 0.4em 0;
+  }
+}
+
+.product-detail {
+  .price {
+    font-size: 1.2em;
+    padding-bottom: 0;
+  }
+  .old-price {
+    font-size: 1em;
+  }
+}
+
+// cart page
+.cart {
+  .col {
+    padding-left: 0;
+  }
+  select {
+    padding: 0.2em;
+    vertical-align: middle;
+  }
+  .trash {
+    font-size: 1.8em;
+    vertical-align: middle;
+  }
+}

@@ -1,0 +1,42 @@
+<!--
+  This template loads for the 'checkout_shipping' state (app.js)
+-->
+<ion-view view-title="Shipping">
+  <ion-content class="checkout">
+    <ion-list>
+
+      <ion-radio ng-model="choice" ng-value="'A'">
+        DHL
+        <p class="text-hint">No addional cost</p>
+      </ion-radio>
+
+      <ion-radio ng-model="choice" ng-value="'B'">
+        UPS
+        <p class="text-hint">No addional cost</p>
+      </ion-radio>
+
+      <ion-radio ng-model="choice" ng-value="'B'">
+        FEDEX EXPRESS
+        <p class="text-hint">Addional $1.99</p>
+      </ion-radio>
+
+    </ion-list>
+
+    <!-- Shipping address-->
+    <div class="padding">
+      <h4 class="text-center">Shipping address</h4>
+      No 01
+      <br/>
+      St Luiz, Barcelona
+      <br/>
+      Spain
+    </div>
+
+    <div class="padding">
+      <button class="button button-block button-energized" ui-sref="checkout_payment">
+        Next step
+      </button>
+    </div>
+
+  </ion-content>
+</ion-view>

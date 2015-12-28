@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+
+    <!-- compiled css output -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+  </head>
+  <body ng-app="starter">
+  <ion-side-menus>
+
+    <!-- Center content -->
+    <ion-side-menu-content>
+      <ion-nav-bar class="bar-positive" align-title="center">
+        <!-- Back button -->
+        <ion-nav-back-button>
+          Back
+        </ion-nav-back-button>
+
+        <!-- Burger button -->
+        <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+          </button>
+        </ion-nav-buttons>
+
+        <!-- Cart button -->
+        <ion-nav-buttons side="right">
+          <button class="button button-icon button-clear ion-bag" ui-sref="cart">
+            <span class="header-badge">5</span>
+          </button>
+        </ion-nav-buttons>
+      </ion-nav-bar>
+
+      <!-- Main view content -->
+      <ion-nav-view animation="slide-left-right"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <!-- Left menu -->
+    <ion-side-menu side="left" class="dark-bg">
+      <ion-content>
+
+        <!-- Search input on head of side menu -->
+        <ion-header-bar class="bar bar-light item-input-inset dark-bg">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" placeholder="Search">
+          </label>
+        </ion-header-bar>
+
+        <!-- Menu -->
+        <div class="list" menu-close="">
+          <div class="item item-icon-lef" ui-sref="home">
+            <i class="icon ion-home"></i>
+            Home
+          </div>
+
+          <div class="item item-icon-lef item-divider" ui-sref="category">
+            <i class="icon ion-man"></i>
+            Men
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+              Oouterwear
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+              Jackets
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+              Leather
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+              Blazers
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+              Suits
+          </div>
+          <div class="item item-icon-lef item-divider" ui-sref="category">
+            <i class="icon ion-woman"></i>
+            Women
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+            Jackets
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+            Blazers
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+            Leather
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+            Dreses
+          </div>
+          <div class="item item-icon-lef" ui-sref="category">
+            <i class="icon ion-tshirt-outline"></i>
+            Outerwear
+          </div>
+          <div class="item item-icon-lef item-divider">
+            <i class="icon ion-ios-gear"></i>
+            Application
+          </div>
+          <div class="item item-icon-lef" ui-sref="login">
+            <i class="icon ion-android-exit"></i>
+            Logout
+          </div>
+        </div>
+
+      </ion-content>
+
+    </ion-side-menu>
+
+  </ion-side-menus>
+
+  </body>
+</html>

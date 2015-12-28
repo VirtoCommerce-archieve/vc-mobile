@@ -1,0 +1,49 @@
+<ion-view view-title="Login" hide-nav-bar="true" class="stable-bg">
+  <ion-content>
+    <!-- Logo -->
+    <div class="padding text-center">
+      <h1>
+        <i class="energized ion-bag"></i>
+      </h1>
+      <h2 class="energized">ionShop</h2>
+      <p class="energized">Mobile E-commerce</p>
+    </div>
+
+    <!-- Login form -->
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="email" placeholder="Email">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password">
+      </label>
+    </div>
+    <div class="padding">
+      <button class="button button-block button-energized" ui-sref="home">
+        Login
+      </button>
+    </div>
+
+    <!-- Social login -->
+    <div class="padding row">
+      <div class="col facebook-login icon-left social-button">
+        <i class="icon ion-social-facebook"></i>
+        <span>Facebook</span>
+      </div>
+      <div class="col twitter-login icon-left social-button">
+        <i class="icon ion-social-twitter"></i>
+        Twitter
+      </div>
+    </div>
+
+    <!-- Other links -->
+    <div class="padding row">
+      <div class="col">
+        <span class="dark">Forgot password?</span>
+      </div>
+      <div class="col">
+        <a ui-sref="register" class="dark">New here? Sign up</a>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

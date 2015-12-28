@@ -1,0 +1,21 @@
+<!--
+  This template loads for the 'category'' state (app.js)
+-->
+<ion-view view-title="Category" hide-back-button="true">
+  <ion-content class="">
+
+    <!-- List of items: 2 columns-->
+    <div class="row flex-wrap">
+      <div class="col-50" ng-repeat="item in products">
+        <a ui-sref="detail">
+          <img class="full-image" src="{{ item.thumb }}" alt=""/>
+          <span class="product-title">{{ item.name }}</span>
+          <span class="price dark" ng-if="!item.sale_price">${{ item.price }}</span>
+          <span class="price dark" ng-if="item.sale_price">${{ item.sale_price}}</span>
+          <span class="old-price" ng-if="item.sale_price">${{ item.price }}</span>
+        </a>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

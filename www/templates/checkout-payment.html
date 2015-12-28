@@ -1,0 +1,44 @@
+<!--
+  This template loads for the 'checkcout_payment' state (app.js)
+-->
+<ion-view view-title="Payment">
+  <ion-content class="checkout">
+    <ion-list>
+
+      <ion-radio ng-model="choice" ng-value="'A'">
+        Credit card
+        <p class="text-hint">Visa, Mastercard</p>
+      </ion-radio>
+
+      <ion-radio ng-model="choice" ng-value="'B'">
+        Paypal
+        <p class="text-hint">successdt@hotmail.com</p>
+      </ion-radio>
+
+      <ion-radio ng-model="choice" ng-value="'B'">
+        Apple pay
+        <p class="text-hint">applepay@gmail.com</p>
+      </ion-radio>
+
+    </ion-list>
+
+    <div class="list">
+      <div class="item">
+        <input type="text" placeholder="Credit card #No"/>
+      </div>
+      <div class="item">
+        <input type="text" placeholder="Expires"/>
+      </div>
+      <div class="item">
+        <input type="text" placeholder="CVV-Code"/>
+      </div>
+    </div>
+
+    <div class="padding">
+      <button class="button button-block button-energized" ui-sref="home">
+        Finish your order
+      </button>
+    </div>
+
+  </ion-content>
+</ion-view>
