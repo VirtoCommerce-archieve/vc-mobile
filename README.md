@@ -1,5 +1,5 @@
 # Virto Commerce Mobile
-Mobile starter kit for developing e-commerce related apps using Virto Commerce API
+Mobile starter kit for developing e-commerce related apps using Virto Commerce API. It is developed using ionicframework.com, angularjs and cordova.
 
 Simple configuration (good for modifying simple html)
 --------------
