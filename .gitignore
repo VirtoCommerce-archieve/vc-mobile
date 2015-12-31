@@ -5,3 +5,11 @@ node_modules/
 platforms/
 plugins/
 .idea/
+
+## Ignore Visual Studio user-specific files
+*.suo
+*.user
+*.sln.docstates
+/.vs
+
+/bld/Android/Debug/changeList.json

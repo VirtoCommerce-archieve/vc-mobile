@@ -9,7 +9,7 @@
 
       <ion-slide ng-repeat="image in product.images">
         <div class="box">
-          <img class="full-image" src="{{ image }}" alt=""/>
+          <img class="full-image" ng-src="{{ image }}" alt=""/>
         </div>
       </ion-slide>
 
@@ -77,7 +77,7 @@
     <div class="item-divider padding">Reviews</div>
     <div class="list">
       <div class="item item-avatar" ng-repeat="review in product.reviews">
-        <img src="{{ review.avatar }}" alt=""/>
+        <img ng-src="{{ review.avatar }}" alt=""/>
         <h2>{{ review.name }}</h2>
         <p>{{ review.content }}</p>
         <p>
