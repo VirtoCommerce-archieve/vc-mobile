@@ -4,17 +4,9 @@
 <ion-view view-title="Shipping">
     <ion-content class="checkout">
         <ion-list>
-            <ion-radio ng-model="choice" ng-value="'A'" ng-repeat="data in checkout.availableShippingMethods">
+            <ion-radio ng-model="checkout.shipmentMethodCode" ng-value="data.shipmentMethodCode" ng-repeat="data in checkout.availableShippingMethods">
                 {{data.name}}
                 <p class="text-hint">{{data.price.formatedAmount}}</p>
-            </ion-radio>
-            <ion-radio ng-model="choice" ng-value="'B'">
-                UPS
-                <p class="text-hint">No addional cost</p>
-            </ion-radio>
-            <ion-radio ng-model="choice" ng-value="'B'">
-                FEDEX EXPRESS
-                <p class="text-hint">Addional $1.99</p>
             </ion-radio>
         </ion-list>
         <!-- Shipping address-->
@@ -27,7 +19,7 @@
             <span ng-if="checkout.shippingAddress.phone" ng-bind="checkout.shippingAddress.phone"></span>
         </div>
         <div class="padding">
-            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.selectedShippingMethod.shipmentMethodCode || checkout.shippingMethodProcessing">
+            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.shipmentMethodCode || checkout.shippingMethodProcessing">
                 Next step
             </button>
         </div>

@@ -18,11 +18,8 @@ angular.module('virtoshopApp')
         getCountries: { url: apiConfig.baseUrl + 'search/common/getcountries', isArray: true },
         addAddress: { url: apiConfig.baseUrl + 'cart/addaddress', method: 'POST' },
         getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shippingmethods', isArray: true },
-        //getAvailableShippingMethods: function () {
-        //    return $http.get('cart/shippingmethods/json?t=' + new Date().getTime());
-        //},
         setShippingMethod: { url: apiConfig.baseUrl + 'cart/shippingmethod', method: 'POST' },
-        
+
     });
 }])
 
