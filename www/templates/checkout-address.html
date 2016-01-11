@@ -1,41 +1,44 @@
 <!--
-  This template loads for the 'chekcout_address' state (app.js)
+  This template loads for the 'checkout_address' state (app.js)
 -->
 <ion-view view-title="Address">
-  <ion-content class="checkout">
-    <div class="list">
-      <div class="item">
-        <input type="text" placeholder="First name"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="Last name"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="Address line 1"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="Address line 2"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="City"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="Zip"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="State"/>
-      </div>
-      <div class="item">
-        <input type="text" placeholder="Country"/>
-      </div>
-    </div>
-
-    <!-- Next button -->
-    <div class="padding">
-      <button class="button button-block button-energized" ui-sref="checkout_shipping">
-        Next step
-      </button>
-    </div>
-
-  </ion-content>
+    <ion-content class="checkout">
+        <form accept-charset="UTF-8" name="formCustomerInformation" novalidate="novalidate">
+            <div class="list">
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.firstName" type="text" placeholder="First name" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.lastName" type="text" placeholder="Last name" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.line1" type="text" placeholder="Address line 1" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.line2" type="text" placeholder="Address line 2" />
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.city" type="text" placeholder="City" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.postalCode" type="text" placeholder="Zip" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.countryName" type="text" placeholder="Country" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.regionName" type="text" placeholder="State" required/>
+                </div>
+                <div class="item">
+                    <input ng-model="checkout.shippingAddress.email" type="email" placeholder="Email" required />
+                </div>
+            </div>
+            <!-- Next button -->
+            <div class="padding">
+                <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="formCustomerInformation.$invalid || checkout.customerInformationProcessing">
+                    Next step
+                </button>
+            </div>
+        </form>
+    </ion-content>
 </ion-view>

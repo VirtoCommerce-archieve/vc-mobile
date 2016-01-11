@@ -16,7 +16,7 @@
         <div class="row flex-wrap">
             <div class="col-50" ng-repeat="item in entries">
                 <a ui-sref="category({id: '{{item.id}}', name: '{{item.name}}'})">
-                    <img class="full-image" ng-src="{{ item.thumb }}" alt="" />
+                    <img class="full-image" ng-src="{{ item.images[0].url }}" alt="" />
                     <span class="product-title">{{ item.name }}</span>
                     <span class="price dark" ng-if="!item.sale_price && item.price">${{ item.price }}</span>
                     <span class="price dark" ng-if="item.sale_price">${{ item.sale_price}}</span>

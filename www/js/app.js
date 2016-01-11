@@ -1,8 +1,6 @@
 // Ionic Starter App 'virtoshopApp'.
-
-// 'virtoshopApp.controllers' is found in controllers.js
-angular.module('virtoshopApp', ['ionic', 'ngResource', 'virtoshopApp.controllers'])
-.run(function ($ionicPlatform, $http, virtoshopApp_apiConfig) {
+angular.module('virtoshopApp', ['ionic', 'ngResource'])
+.run(['$ionicPlatform', '$http', 'virtoshopApp.apiConfig', function ($ionicPlatform, $http, apiConfig) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard for form inputs)
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -17,18 +15,27 @@ angular.module('virtoshopApp', ['ionic', 'ngResource', 'virtoshopApp.controllers
     });
 
     // authenticate the app to api
-    $http.post(virtoshopApp_apiConfig.baseUrl + 'platform/security/login/', { userName: virtoshopApp_apiConfig.username, password: virtoshopApp_apiConfig.password }).then(function (results) { });
+    // $http.post(apiConfig.baseUrl + 'platform/security/login/', { userName: apiConfig.username, password: apiConfig.password }).then(function (results) { });
+}])
+
+.factory('workContext', function () {
+    var retVal = {
+        current: { cart: {} },
+        update: function (newContext) {
+            _.extend(this.current, newContext);
+        }
+    };
+    return retVal;
 })
 
-.constant('virtoshopApp_apiConfig', {
-    username: 'admin',
-    password: 'store',
-    catalogId: '25f5ea1b52e54ec1aa903d44cc889324',
+.constant('virtoshopApp.apiConfig', {
+    storeId: 'Clothing',
+    currency: 'USD',
     baseUrl: 'http://localhost:8100/api/'
     // baseUrl: 'http://demo.virtocommerce.com/admin/api/'
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
@@ -50,17 +57,17 @@ angular.module('virtoshopApp', ['ionic', 'ngResource', 'virtoshopApp.controllers
     })
 
     // Product detail
-    .state('detail', {
-        url: '/detail',
-        templateUrl: 'templates/detail.html',
-        controller: 'DetailCtrl'
+    .state('product', {
+        url: '/product/:id/:name',
+        templateUrl: 'templates/product.html',
+        controller: 'productController'
     })
 
     // Cart detail
     .state('cart', {
         url: '/cart',
         templateUrl: 'templates/cart.html',
-        controller: 'CartCtrl'
+        controller: 'cartController'
     })
 
     // Checkout steps
@@ -68,21 +75,21 @@ angular.module('virtoshopApp', ['ionic', 'ngResource', 'virtoshopApp.controllers
     .state('checkout_address', {
         url: '/checkout/address',
         templateUrl: 'templates/checkout-address.html',
-        controller: 'CheckoutCtrl'
+        controller: 'checkoutAddressController'
     })
 
     // Shipping
     .state('checkout_shipping', {
         url: '/checkout/shipping',
         templateUrl: 'templates/checkout-shipping.html',
-        controller: 'CheckoutCtrl'
+        controller: 'checkoutShippingController'
     })
 
     // Payment
     .state('checkout_payment', {
         url: '/checkout/payment',
         templateUrl: 'templates/checkout-payment.html',
-        controller: 'CheckoutPaymentCtrl'
+        controller: 'checkoutPaymentController'
     })
 
     // login screen
@@ -102,4 +109,4 @@ angular.module('virtoshopApp', ['ionic', 'ngResource', 'virtoshopApp.controllers
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');
 
-});
+}]);

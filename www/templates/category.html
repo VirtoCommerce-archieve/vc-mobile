@@ -6,12 +6,11 @@
         <!-- List of items: 2 columns-->
         <div class="row flex-wrap">
             <div class="col-50" ng-repeat="item in entries">
-                <a ui-sref="detail">
-                    <img class="full-image" ng-src="{{ item.thumb }}" alt="" />
+                <a ui-sref="product({id: '{{item.id}}', name: '{{item.name}}'})">
+                    <img class="full-image" ng-src="{{ item.primaryImage.url }}" alt="" />
                     <span class="product-title">{{ item.name }}</span>
-                    <span class="price dark" ng-if="!item.sale_price && item.price">${{ item.price }}</span>
-                    <span class="price dark" ng-if="item.sale_price">${{ item.sale_price}}</span>
-                    <span class="old-price" ng-if="item.sale_price">${{ item.price }}</span>
+                    <span class="price dark" ng-if="item.price.actualPrice.amount">${{ item.price.actualPrice.amount}}</span>
+                    <span class="old-price" ng-if="item.price.actualPrice.amount < item.price.listPrice.amount">${{ item.price.listPrice.amount }}</span>
                 </a>
             </div>
         </div>

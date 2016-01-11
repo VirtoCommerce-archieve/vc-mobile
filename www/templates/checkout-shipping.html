@@ -2,41 +2,34 @@
   This template loads for the 'checkout_shipping' state (app.js)
 -->
 <ion-view view-title="Shipping">
-  <ion-content class="checkout">
-    <ion-list>
-
-      <ion-radio ng-model="choice" ng-value="'A'">
-        DHL
-        <p class="text-hint">No addional cost</p>
-      </ion-radio>
-
-      <ion-radio ng-model="choice" ng-value="'B'">
-        UPS
-        <p class="text-hint">No addional cost</p>
-      </ion-radio>
-
-      <ion-radio ng-model="choice" ng-value="'B'">
-        FEDEX EXPRESS
-        <p class="text-hint">Addional $1.99</p>
-      </ion-radio>
-
-    </ion-list>
-
-    <!-- Shipping address-->
-    <div class="padding">
-      <h4 class="text-center">Shipping address</h4>
-      No 01
-      <br/>
-      St Luiz, Barcelona
-      <br/>
-      Spain
-    </div>
-
-    <div class="padding">
-      <button class="button button-block button-energized" ui-sref="checkout_payment">
-        Next step
-      </button>
-    </div>
-
-  </ion-content>
+    <ion-content class="checkout">
+        <ion-list>
+            <ion-radio ng-model="choice" ng-value="'A'" ng-repeat="data in checkout.availableShippingMethods">
+                {{data.name}}
+                <p class="text-hint">{{data.price.formatedAmount}}</p>
+            </ion-radio>
+            <ion-radio ng-model="choice" ng-value="'B'">
+                UPS
+                <p class="text-hint">No addional cost</p>
+            </ion-radio>
+            <ion-radio ng-model="choice" ng-value="'B'">
+                FEDEX EXPRESS
+                <p class="text-hint">Addional $1.99</p>
+            </ion-radio>
+        </ion-list>
+        <!-- Shipping address-->
+        <div class="padding">
+            <h4 class="text-center">Shipping address</h4>
+            <span ng-bind="checkout.shippingAddress.firstName"></span> <span ng-bind="checkout.shippingAddress.lastName"></span><br />
+            <span ng-bind="checkout.shippingAddress.line1"></span><span ng-if="checkout.shippingAddress.line2" ng-bind="', ' + checkout.shippingAddress.line2"></span><br />
+            <span ng-bind="checkout.shippingAddress.city"></span><span ng-if="checkout.shippingAddress.regionName" ng-bind="', ' + checkout.shippingAddress.regionName"></span>, <span ng-bind="checkout.shippingAddress.postalCode"></span><br />
+            <span ng-bind="checkout.shippingAddress.countryName"></span><br ng-if="checkout.shippingAddress.phone" />
+            <span ng-if="checkout.shippingAddress.phone" ng-bind="checkout.shippingAddress.phone"></span>
+        </div>
+        <div class="padding">
+            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.selectedShippingMethod.shipmentMethodCode || checkout.shippingMethodProcessing">
+                Next step
+            </button>
+        </div>
+    </ion-content>
 </ion-view>

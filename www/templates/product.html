@@ -1,15 +1,14 @@
 <!--
-  This template loads for the 'detail' state (app.js)
-  'product' is a $scope variable from DetailCtrl
+  This template loads for the 'searchAPI' state (app.js)
 -->
-<ion-view view-title="{{ product.name }}">
+<ion-view view-title="{{ selectedVariation.name }}">
   <ion-content class="product-detail">
     <!-- Slider using slide box -->
     <ion-slide-box class="full-image" auto-play="true">
 
-      <ion-slide ng-repeat="image in product.images">
+      <ion-slide ng-repeat="image in selectedVariation.images">
         <div class="box">
-          <img class="full-image" ng-src="{{ image }}" alt=""/>
+          <img class="full-image" ng-src="{{ image.url }}" alt=""/>
         </div>
       </ion-slide>
 
@@ -38,15 +37,13 @@
 
     <!-- Add to cart button -->
     <div class="row add-cart">
-
       <div class="col">
-        <p class="price dark" ng-if="!product.sale_price">${{ product.price }}</p>
-        <p class="price dark" ng-if="product.sale_price">${{ product.sale_price}}</p>
-        <span class="old-price" ng-if="product.sale_price">${{ product.price }}</span>
+        <p class="price dark" ng-if="selectedVariation.price.actualPrice.amount">${{ selectedVariation.price.actualPrice.amount}}</p>
+        <span class="old-price" ng-if="selectedVariation.price.actualPrice.amount < selectedVariation.price.listPrice.amount">${{ selectedVariation.price.listPrice.amount }}</span>
       </div>
 
       <div class="col">
-        <button class="button button-block button-energized">
+        <button class="button button-block button-energized" ng-click="addToCart(selectedVariation.id, 1)">
           <i class="ion-bag"></i>
           Buy
         </button>
@@ -57,7 +54,7 @@
     <div class="linediv-l"></div>
     <div class="padding">
       <h4 class="positive">Description</h4>
-      {{ product.description }}
+      {{ selectedVariation.description }}
     </div>
 
     <div class="row">
@@ -76,7 +73,7 @@
     <!-- Item -->
     <div class="item-divider padding">Reviews</div>
     <div class="list">
-      <div class="item item-avatar" ng-repeat="review in product.reviews">
+      <div class="item item-avatar" ng-repeat="review in selectedVariation.reviews">
         <img ng-src="{{ review.avatar }}" alt=""/>
         <h2>{{ review.name }}</h2>
         <p>{{ review.content }}</p>

@@ -1,10 +1,31 @@
 angular.module('virtoshopApp')
-.factory('Product', function ($resource, virtoshopApp_apiConfig) {
-    return $resource(virtoshopApp_apiConfig.baseUrl + 'catalog/listentries?catalog=25f5ea1b52e54ec1aa903d44cc889324&respGroup=withCategories', { id: '@id' }, {
-        all: {},
-        listitemssearch: { url: virtoshopApp_apiConfig.baseUrl + 'catalog/listentries' },
+.factory('searchAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
+    return $resource(null, { id: '@id' }, {
+        getCategories: { url: apiConfig.baseUrl + 'search/categories' },
+        getCategoryProducts: { url: apiConfig.baseUrl + 'search/products' },
+        getProduct: { url: apiConfig.baseUrl + 'search/products/:id' }
     });
-})
+}])
+
+.factory('cartAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
+    return $resource(apiConfig.baseUrl + 'cart', { id: '@id' }, {
+        getCart: {},
+        addLineItem: { url: apiConfig.baseUrl + 'cart/additem', method: 'POST' },
+        changeLineItem: { url: apiConfig.baseUrl + 'cart/changeitem', method: 'POST' },
+        removeLineItem: { url: apiConfig.baseUrl + 'cart/removeitem', method: 'POST' },
+        // query: { isArray: true },
+        // update: { method: 'PUT' },
+        getCountries: { url: apiConfig.baseUrl + 'search/common/getcountries', isArray: true },
+        addAddress: { url: apiConfig.baseUrl + 'cart/addaddress', method: 'POST' },
+        getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shippingmethods', isArray: true },
+        //getAvailableShippingMethods: function () {
+        //    return $http.get('cart/shippingmethods/json?t=' + new Date().getTime());
+        //},
+        setShippingMethod: { url: apiConfig.baseUrl + 'cart/shippingmethod', method: 'POST' },
+        
+    });
+}])
+
 .factory('aProduct', function () {
     // Might use a resource here that returns a JSON array
 
@@ -17,9 +38,9 @@ angular.module('virtoshopApp')
           sale_price: 20,
           thumb: "img/list/p_1.jpg",
           images: [
-            "img/detail/d_1.jpg",
-            "img/detail/d_2.jpg",
-            "img/detail/d_3.jpg"
+            { url: "img/detail/d_1.jpg" },
+            { url: "img/detail/d_2.jpg" },
+            { url: "img/detail/d_3.jpg" }
           ],
           description: "Due to Christmas Time, the returns/exchanges period for orders placed between the 27th of November and the 17th of December will be extended until the 17th of January.",
           reviews: [
