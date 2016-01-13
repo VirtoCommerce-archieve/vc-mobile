@@ -19,13 +19,13 @@ angular.module('virtoshopApp')
         addAddress: { url: apiConfig.baseUrl + 'cart/addaddress', method: 'POST' },
         getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shippingmethods', isArray: true },
         setShippingMethod: { url: apiConfig.baseUrl + 'cart/shippingmethod', method: 'POST' },
-
+        getAvailablePaymentMethods: { url: apiConfig.baseUrl + 'cart/paymentmethods', isArray: true },
+        setPaymentMethod: { url: apiConfig.baseUrl + 'cart/paymentmethod', method: 'POST' },
+        createOrder: { url: apiConfig.baseUrl + 'cart/createorder', method: 'POST' }
     });
 }])
 
 .factory('aProduct', function () {
-    // Might use a resource here that returns a JSON array
-
     // Some fake testing data
     var products = [
       {
@@ -112,8 +112,8 @@ angular.module('virtoshopApp')
     ];
 
     return {
-        all: function () {
-            return products;
+        query: function (prm, callback) {
+            callback(products);
         },
         get: function (productId) {
             for (var i = 0; i < products.length; i++) {

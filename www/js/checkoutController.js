@@ -44,12 +44,7 @@ angular.module('virtoshopApp')
     }
 
     function initialize() {
-        $scope.checkout.orderSummaryExpanded = false;
-        $scope.checkout.billingAddressEqualsShipping = true;
         $scope.checkout.shippingAddress = { type: 'Shipping' };
-        $scope.checkout.billingAddress = { type: 'Billing' };
-        $scope.checkout.bankCardInfo = {};
-        $scope.checkout.selectedAddressId = 1;
         // getCurrentCustomer();
         getCountries();
         refreshCheckout();
@@ -75,7 +70,6 @@ angular.module('virtoshopApp')
             if (!$scope.checkout.hasPhysicalProducts) {
                 $state.go('checkout_payment');
             }
-            getBillingAddress(cart.defaultBillingAddress);
             $scope.checkout.hasCustomerInformation = checkAddress($scope.checkout.shippingAddress, _.any($scope.checkout.countryRegions));
             $scope.checkout.hasShippingMethod = _.any(cart.shipments);
         });
@@ -111,12 +105,6 @@ angular.module('virtoshopApp')
         // selectAddress('Shipping');
     }
 
-    function getBillingAddress(cartAddress) {
-        angular.copy(cartAddress, $scope.checkout.billingAddress);
-        $scope.checkout.billingAddress.type = 'Billing';
-        $scope.checkout.billingAddressEqualsShipping = true;
-    }
-
     function checkAddress(address, provinceRequired) {
         var isValid = false;
         if (address.email && address.firstName && address.lastName && address.line1 &&
@@ -142,7 +130,7 @@ angular.module('virtoshopApp')
             $state.go('checkout_payment');
         });
     };
-    
+
     function initialize() {
         getAvailableShippingMethods();
         refreshCheckout();
@@ -173,9 +161,77 @@ angular.module('virtoshopApp')
 }])
 
     // Checkout Payment step
-.controller('checkoutPaymentController', ['$scope', '$ionicHistory', function ($scope, $ionicHistory) {
+.controller('checkoutPaymentController', ['$scope', '$state', 'cartAPI', 'workContext', '$ionicHistory', function ($scope, $state, cartAPI, workContext, $ionicHistory) {
     // hide back button in next view
-    $ionicHistory.nextViewOptions({
-        disableBack: true
-    });
+    //$ionicHistory.nextViewOptions({
+    //    disableBack: true
+    //});
+
+    $scope.checkout = workContext.current.checkout;
+
+    $scope.completeOrder = function () {
+        $scope.checkout.orderProcessing = true;
+        cartAPI.setPaymentMethod({ paymentMethodCode: $scope.checkout.paymentMethodCode }, null).$promise
+            .then(function () {
+                cartAPI.addAddress($scope.checkout.billingAddress);
+            })
+            .then(function () {
+                return cartAPI.createOrder({ bankCardInfo: $scope.checkout.bankCardInfo }).$promise;
+            })
+            .then(function (data) {
+                handlePaymentProcessingResult(data.orderProcessingResult, data.order.number);
+            })
+            //.catch(function (error) {
+            //    console.log("An error occurred: " + error);
+            //})
+            .finally(function () {
+                $scope.checkout.orderProcessing = false;
+            });
+    }
+
+    function initialize() {
+        $scope.checkout.bankCardInfo = {};
+        //getCurrentCustomer();
+        //getCountries();
+        getAvailablePaymentMethods();
+        refreshCheckout();
+    }
+
+    function getAvailablePaymentMethods() {
+        cartAPI.getAvailablePaymentMethods(function (availablePaymentMethods) {
+            $scope.checkout.availablePaymentMethods = availablePaymentMethods;
+            if (availablePaymentMethods.length === 1) {
+                $scope.checkout.paymentMethodCode = availablePaymentMethods[0].gatewayCode;
+            }
+        });
+    }
+
+    function refreshCheckout() {
+        cartAPI.getCart(function (cart) {
+            $scope.checkout.subtotal = cart.subTotal;
+            $scope.checkout.shippingTotal = cart.shippingTotal;
+            $scope.checkout.taxTotal = cart.taxTotal;
+            $scope.checkout.discountTotal = cart.discountTotal;
+            $scope.checkout.total = cart.total;
+
+            getBillingAddress(cart.defaultShippingAddress, cart.defaultBillingAddress);
+        });
+    }
+
+    function getBillingAddress(defaultAddress, newAddress) {
+        //$scope.checkout.billingAddressEqualsShipping = true;
+        var copyAddress = angular.copy(defaultAddress);
+        angular.extend(copyAddress, newAddress);
+        $scope.checkout.billingAddress = copyAddress;
+    }
+
+    function handlePaymentProcessingResult(paymentProcessingResult, orderNumber) {
+        if (!paymentProcessingResult.isSuccess) {
+            return;
+        }
+
+        $state.go('home');
+    }
+
+    initialize();
 }]);

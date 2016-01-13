@@ -4,7 +4,7 @@
 <ion-view view-title="Cart">
     <ion-content class="cart">
         <div class="list">
-            <div class="item item-thumbnail-left" ng-repeat="data in cart.items | orderBy: 'name' track by data.id">
+            <div class="item item-thumbnail-left" ng-repeat="data in cart.items track by data.id">
                 <img ng-src="{{data.imageUrl}}" alt="" />
                 <h2 class="positive">{{data.name}}</h2>
                 <div>
@@ -77,7 +77,7 @@
         </div>
         <!-- Checkout button -->
         <div class="padding">
-            <button class="button button-block button-energized" ui-sref="checkout_address">
+            <button class="button button-block button-energized" ui-sref="checkout_address" ng-disabled="!cart.itemsCount">
                 Checkout
             </button>
         </div>
