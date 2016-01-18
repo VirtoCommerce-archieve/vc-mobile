@@ -162,11 +162,6 @@ angular.module('virtoshopApp')
 
     // Checkout Payment step
 .controller('checkoutPaymentController', ['$scope', '$state', 'cartAPI', 'workContext', '$ionicHistory', function ($scope, $state, cartAPI, workContext, $ionicHistory) {
-    // hide back button in next view
-    //$ionicHistory.nextViewOptions({
-    //    disableBack: true
-    //});
-
     $scope.checkout = workContext.current.checkout;
 
     $scope.completeOrder = function () {
@@ -230,8 +225,21 @@ angular.module('virtoshopApp')
             return;
         }
 
-        $state.go('home');
+        // hide back button in next view
+        $ionicHistory.nextViewOptions({
+            disableBack: true
+        });
+
+        workContext.current.cart.items = [];
+        workContext.current.cart.itemsCount = 0;
+        workContext.current.checkout.orderNumber = orderNumber;
+        $state.go('checkout_thanks');
+
     }
 
     initialize();
+}])
+
+.controller('checkoutThanksController', ['$scope', 'workContext', '$ionicHistory', function ($scope, workContext, $ionicHistory) {
+    $scope.checkout = workContext.current.checkout;
 }]);

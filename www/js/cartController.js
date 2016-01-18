@@ -1,11 +1,4 @@
 angular.module('virtoshopApp')
-// cart informer Controller
-.controller('cartInformerController', ['$scope', 'workContext', 'cartAPI', function ($scope, workContext, cartAPI) {
-    cartAPI.getCart(function (result) {
-        $scope.cart = workContext.current.cart = result;
-    });
-}])
-
 // cart detail Controller
 .controller('cartController', ['$scope', '$timeout', 'workContext', 'cartAPI', function ($scope, $timeout, workContext, cartAPI) {
     var timer;

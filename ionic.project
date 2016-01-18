@@ -11,8 +11,8 @@
   ],
   "proxies": [
     {
-      "path": "/api",
-      "proxyUrl": "http://demo.virtocommerce.com/admin/api"
+      "path": "/storefrontapi",
+      "proxyUrl": "http://demo.virtocommerce.com/storefrontapi"
     }
   ] 
 }

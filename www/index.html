@@ -23,7 +23,7 @@
     <script src="js/productController.js"></script>
 </head>
 <body ng-app="virtoshopApp" ng-strict-di>
-    <ion-side-menus>
+    <ion-side-menus ng-controller="HomeCtrl">
         <!-- Center content -->
         <ion-side-menu-content>
             <ion-nav-bar class="bar-positive" align-title="center">
@@ -37,7 +37,7 @@
                 </ion-nav-buttons>
                 <!-- Cart button -->
                 <ion-nav-buttons side="right">
-                    <button class="button button-icon button-clear ion-bag" ui-sref="cart" ng-controller="cartInformerController">
+                    <button class="button button-icon button-clear ion-bag" ui-sref="cart">
                         <span class="header-badge">{{cart.itemsCount}}</span>
                     </button>
                 </ion-nav-buttons>
@@ -52,7 +52,7 @@
                 <ion-header-bar class="bar bar-light item-input-inset dark-bg">
                     <label class="item-input-wrapper">
                         <i class="icon ion-ios-search placeholder-icon"></i>
-                        <input type="search" placeholder="Search">
+                        <input type="search" placeholder="Search" ng-model="search.keyword">
                     </label>
                 </ion-header-bar>
                 <!-- Menu -->
@@ -61,54 +61,11 @@
                         <i class="icon ion-home"></i>
                         Home
                     </div>
-                    <div class="item item-icon-lef item-divider" ui-sref="category">
-                        <i class="icon ion-man"></i>
-                        Men
+                    <div class="item item-icon-lef item-divider" ui-sref="category({id: '{{item.id}}', name: '{{item.name}}'})" ng-repeat="item in entries">
+                        <!--<i class="icon ion-man"></i>-->
+                        {{ item.name }}
                     </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Outerwear
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Jackets
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Leather
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Blazers
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Suits
-                    </div>
-                    <div class="item item-icon-lef item-divider" ui-sref="category">
-                        <i class="icon ion-woman"></i>
-                        Women
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Jackets
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Blazers
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Leather
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Dresses
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="category">
-                        <i class="icon ion-tshirt-outline"></i>
-                        Outerwear
-                    </div>
+
                     <div class="item item-icon-lef item-divider">
                         <i class="icon ion-ios-gear"></i>
                         Application

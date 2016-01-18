@@ -1,7 +1,7 @@
 angular.module('virtoshopApp')
 
 // Home controller
-.controller('HomeCtrl', ['$scope', 'searchAPI', 'workContext', '$ionicNavBarDelegate', function ($scope, searchAPI, workContext, $ionicNavBarDelegate) {
+.controller('HomeCtrl', ['$scope', 'searchAPI', 'cartAPI', 'workContext', '$ionicNavBarDelegate', function ($scope, searchAPI, cartAPI, workContext, $ionicNavBarDelegate) {
     // slider images
     $scope.slides = [
       { url: 'img/slide_1.jpg' },
@@ -9,16 +9,28 @@ angular.module('virtoshopApp')
       { url: 'img/slide_3.jpg' }
     ];
 
+    cartAPI.getCart(function (result) {
+        $scope.cart = workContext.current.cart = result;
+    });
+
     // list categories
     searchAPI.getCategories({}, function (data) {
         $scope.entries = data.categories;
         // workContext.update(data);
     },
-    function (error) { console.log(error); });
+        function (error) { console.log(error); });
+    
+    $scope.search = { keyword: undefined };
+    $scope.searchByKeyword = function () {
+        searchAPI.searchProducts({ q: $scope.search.keyword }, function (data) {
+            // $scope.entries = data.products;
+        },
+            function (error) { console.log(error); });
+    };
 }])
 
 // Category controller
-.controller('CategoryCtrl', ['$scope', '$stateParams', 'searchAPI', 'virtoshopApp.apiConfig', function ($scope, $stateParams, searchAPI, apiConfig) {
+.controller('categoryController', ['$scope', '$stateParams', 'searchAPI', function ($scope, $stateParams, searchAPI) {
     //console.log('CategoryCtrl:' + $stateParams.name);
     $scope.name = $stateParams.name;
     searchAPI.getCategoryProducts({

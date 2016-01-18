@@ -1,0 +1,16 @@
+<!--
+  This template loads for the 'checkout_thanks' state (app.js)
+-->
+<ion-view view-title="">
+    <ion-content class="checkout">
+        <div class="padding">
+            <h4 class="text-center">Thank you!</h4>
+            <span>Your order: </span> <span ng-bind="checkout.orderNumber"></span><br />
+        </div>
+        <div class="padding">
+            <button class="button button-block button-energized" ui-sref="home">
+                Continue shopping
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

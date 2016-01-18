@@ -31,8 +31,8 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
 .constant('virtoshopApp.apiConfig', {
     storeId: 'Clothing',
     currency: 'USD',
-    baseUrl: 'http://localhost:8100/api/'
-    // baseUrl: 'http://demo.virtocommerce.com/admin/api/'
+    baseUrl: 'http://localhost:8100/storefrontapi/'
+    // baseUrl: 'http://demo.virtocommerce.com/storefrontapi/'
 })
 
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -45,15 +45,15 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
     // Home screen
     .state('home', {
         url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl'
+        templateUrl: 'templates/home.html'
+        // controller: 'HomeCtrl'
     })
 
     // View category
     .state('category', {
         url: "/categories/:id/:name",
         templateUrl: 'templates/category.html',
-        controller: 'CategoryCtrl'
+        controller: 'categoryController'
     })
 
     // Product detail
@@ -90,6 +90,13 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
         url: '/checkout/payment',
         templateUrl: 'templates/checkout-payment.html',
         controller: 'checkoutPaymentController'
+    })
+
+    // thanks for ordering
+    .state('checkout_thanks', {
+        url: '/checkout/thanks',
+        templateUrl: 'templates/checkout-thanks.html',
+        controller: 'checkoutThanksController'
     })
 
     // login screen
