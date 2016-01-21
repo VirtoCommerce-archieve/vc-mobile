@@ -242,4 +242,8 @@ angular.module('virtoshopApp')
 
 .controller('checkoutThanksController', ['$scope', 'workContext', '$ionicHistory', function ($scope, workContext, $ionicHistory) {
     $scope.checkout = workContext.current.checkout;
+
+    $ionicHistory.nextViewOptions({
+        disableBack: true
+    });
 }]);

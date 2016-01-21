@@ -1,87 +1,92 @@
 <!--
-  This template loads for the 'searchAPI' state (app.js)
+  This template loads for the 'product' state (app.js)
 -->
 <ion-view view-title="{{ selectedVariation.name }}">
-  <ion-content class="product-detail">
-    <!-- Slider using slide box -->
-    <ion-slide-box class="full-image" auto-play="true">
-
-      <ion-slide ng-repeat="image in selectedVariation.images">
-        <div class="box">
-          <img class="full-image" ng-src="{{ image.url }}" alt=""/>
+    <ion-content class="product-detail">
+        <!-- Slider using slide box -->
+        <ion-slide-box class="full-image" auto-play="true">
+            <ion-slide ng-repeat="image in selectedVariation.images">
+                <div class="box">
+                    <img class="full-image" ng-src="{{ image.url }}" alt="" />
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+        <!-- Choose item option -->
+        <div class="row" ng-repeat="(propName, props) in allVariationPropsMap">
+            <div class="col">{{propName}}</div>
+            <div class="col">
+                <ul>
+                    <li ng-repeat="prop in props" ng-class="{'active': prop.selected}">
+                        <a href="" ng-click="checkProperty(prop)" ng-bind="prop.value ? prop.value : 'undef'"></a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div>
+                <select ng-if="props.length>1" ng-model="xx" ng-options="prop.value for prop in props" ng-init="xx = props[0]" ng-change="checkProperty(xx)"></select>
+            </div>-->
+            <!--<div class="col item-input item-options">
+                <select>
+                    <option>Blue</option>
+                    <option selected>Green</option>
+                    <option>Red</option>
+                </select>
+            </div>
+            <div class="col item-input item-options">
+                <select>
+                    <option>Size S</option>
+                    <option selected>Size M</option>
+                    <option>Size L</option>
+                </select>
+            </div>-->
         </div>
-      </ion-slide>
 
-    </ion-slide-box>
-
-    <!-- Choose item option -->
-    <div class="row">
-
-      <div class="col item-input item-options">
-        <select>
-          <option>Blue</option>
-          <option selected>Green</option>
-          <option>Red</option>
-        </select>
-      </div>
-
-      <div class="col item-input item-options">
-        <select>
-          <option>Size S</option>
-          <option selected>Size M</option>
-          <option>Size L</option>
-        </select>
-      </div>
-
-    </div>
-
-    <!-- Add to cart button -->
-    <div class="row add-cart">
-      <div class="col">
-        <p class="price dark" ng-if="selectedVariation.price.actualPrice.amount">${{ selectedVariation.price.actualPrice.amount}}</p>
-        <span class="old-price" ng-if="selectedVariation.price.actualPrice.amount < selectedVariation.price.listPrice.amount">${{ selectedVariation.price.listPrice.amount }}</span>
-      </div>
-
-      <div class="col">
-        <button class="button button-block button-energized" ng-click="addToCart(selectedVariation.id, 1)">
-          <i class="ion-bag"></i>
-          Buy
-        </button>
-      </div>
-    </div>
-
-    <!-- Description -->
-    <div class="linediv-l"></div>
-    <div class="padding">
-      <h4 class="positive">Description</h4>
-      {{ selectedVariation.description }}
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <h5 class="positive">Available color</h5>
-        <i class="ion-stop positive"></i>
-        <i class="ion-stop energized"></i>
-        <i class="ion-stop dark"></i>
-      </div>
-      <div class="col">
-        <h5 class="positive">Available size</h5>
-        S, M, L, XL
-      </div>
-    </div>
-
-    <!-- Item -->
-    <div class="item-divider padding">Reviews</div>
-    <div class="list">
-      <div class="item item-avatar" ng-repeat="review in selectedVariation.reviews">
-        <img ng-src="{{ review.avatar }}" alt=""/>
-        <h2>{{ review.name }}</h2>
-        <p>{{ review.content }}</p>
-        <p>
-          <i class="ion-android-star" ng-repeat="start in range(review.stars) track by $index"></i>
-          <i class="ion-android-star-outline" ng-repeat="start in range(5 - review.stars) track by $index"></i>
-        </p>
-      </div>
-    </div>
-  </ion-content>
+        <!-- Add to cart button -->
+        <div class="row add-cart">
+            <div class="col">
+                <p class="price dark" ng-if="selectedVariation.price.actualPrice.amount">${{ selectedVariation.price.actualPrice.amount}}</p>
+                <span class="old-price" ng-if="selectedVariation.price.actualPrice.amount < selectedVariation.price.listPrice.amount">${{ selectedVariation.price.listPrice.amount }}</span>
+            </div>
+            <div class="col">
+                <button class="button button-block button-energized" ng-click="addToCart(selectedVariation.id, 1)">
+                    <i class="ion-bag"></i>
+                    Buy
+                </button>
+            </div>
+        </div>
+        <!-- Description -->
+        <div class="linediv-l"></div>
+        <div class="padding">
+            <h4 class="positive">Description</h4>
+            {{ selectedVariation.description }}
+        </div>
+        <!--
+        <div class="row">
+            <div class="col">
+                <h5 class="positive">Available color</h5>
+                <i class="ion-stop positive"></i>
+                <i class="ion-stop energized"></i>
+                <i class="ion-stop dark"></i>
+            </div>
+            <div class="col">
+                <h5 class="positive">Available size</h5>
+                S, M, L, XL
+            </div>
+        </div>
+            -->
+        <!-- Reviews -->
+        <!--
+            <div class="item-divider padding">Reviews</div>
+            <div class="list">
+                <div class="item item-avatar" ng-repeat="review in selectedVariation.reviews">
+                    <img ng-src="{{ review.avatar }}" alt=""/>
+                    <h2>{{ review.name }}</h2>
+                    <p>{{ review.content }}</p>
+                    <p>
+                        <i class="ion-android-star" ng-repeat="start in range(review.stars) track by $index"></i>
+                        <i class="ion-android-star-outline" ng-repeat="start in range(5 - review.stars) track by $index"></i>
+                    </p>
+                </div>
+            </div>
+            -->
+    </ion-content>
 </ion-view>
