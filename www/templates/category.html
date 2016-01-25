@@ -14,5 +14,6 @@
                 </a>
             </div>
         </div>
+        <ion-infinite-scroll ng-if="pageSettings.totalItems > pageSettings.currentPage * pageSettings.itemsPerPageCount" on-infinite="loadNextPage()" distance="5%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>

@@ -19,7 +19,7 @@ angular.module('virtoshopApp')
         // workContext.update(data);
     },
         function (error) { console.log(error); });
-    
+
     $scope.search = { keyword: undefined };
     $scope.searchByKeyword = function () {
         searchAPI.searchProducts({ q: $scope.search.keyword }, function (data) {
@@ -31,16 +31,37 @@ angular.module('virtoshopApp')
 
 // Category controller
 .controller('categoryController', ['$scope', '$stateParams', 'searchAPI', function ($scope, $stateParams, searchAPI) {
-    //console.log('CategoryCtrl:' + $stateParams.name);
     $scope.name = $stateParams.name;
-    searchAPI.getCategoryProducts({
-        categoryId: $stateParams.id,
-        skip: 0,
-        take: 20
-    }, function (productsResult) {
-        $scope.entries = productsResult.products;
-    },
-    function (error) { console.log(error); });
+
+    //pagination settings
+    var pageSettings = $scope.pageSettings = {};
+    pageSettings.totalItems = 0;
+    pageSettings.currentPage = 1;
+    pageSettings.itemsPerPageCount = 20;
+    
+    $scope.loadNextPage = function () {
+        pageSettings.currentPage++;
+        loadDataPage();
+    };
+
+    function loadDataPage() {
+        searchAPI.getCategoryProducts({
+            categoryId: $stateParams.id,
+            page: pageSettings.currentPage
+            //skip: (pageSettings.currentPage - 1) * pageSettings.itemsPerPageCount,
+            //take: pageSettings.itemsPerPageCount
+        }, function (productsResult) {
+            pageSettings.totalItems = productsResult.totalItemCount;
+            if (pageSettings.currentPage === 1) {
+                $scope.entries = productsResult.products;
+            } else {
+                $scope.entries = $scope.entries.concat(productsResult.products);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+        }, function (error) { console.log(error); });
+    }
+
+    loadDataPage();
 }])
 
 // Authentication controller
