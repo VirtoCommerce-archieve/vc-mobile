@@ -38,7 +38,7 @@ angular.module('virtoshopApp')
     pageSettings.totalItems = 0;
     pageSettings.currentPage = 1;
     pageSettings.itemsPerPageCount = 20;
-    
+
     $scope.loadNextPage = function () {
         pageSettings.currentPage++;
         loadDataPage();
@@ -66,9 +66,28 @@ angular.module('virtoshopApp')
 
 // Authentication controller
 // Put your login, register functions here
-.controller('AuthCtrl', ['$scope', '$ionicHistory', function ($scope, $ionicHistory) {
+.controller('AuthCtrl', ['$scope', '$ionicHistory', 'authAPI', '$http', function ($scope, $ionicHistory, authAPI,$http) {
     // hide back button in next view
     $ionicHistory.nextViewOptions({
         disableBack: true
     });
+    
+
+    $scope.login = function () {
+        $scope.loginProgress = true;
+        $http.post('http://localhost:8100/storefront/Electronics/account/login/', { login: { Email: $scope.user.email, Password: $scope.user.password, rememberMe: true } }).then(
+			function (results) {
+			    $state.go('home');
+			});
+
+        //authAPI.login({ login: { Email: $scope.user.email, Password: $scope.user.password, rememberMe: true } }, function (results) {
+        //    // changeAuth(results.data);
+        //    $state.go('home');
+        //}, function (error) {
+        //    // bladeNavigationService.setError('Error ' + error.status, blade);
+        //    $scope.loginProgress = false;
+        //});
+    };
+
+    $scope.user = {};
 }]);

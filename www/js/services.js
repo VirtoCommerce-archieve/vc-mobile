@@ -1,4 +1,11 @@
 angular.module('virtoshopApp')
+.factory('authAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
+    return $resource(apiConfig.baseUrl + 'account/login', { id: '@id' }, {
+        login: { method: 'POST' },
+        logout: { url: apiConfig.baseUrl + 'logout', method: 'POST' }
+    });
+}])
+
 .factory('searchAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
     return $resource(null, { id: '@id' }, {
         searchProducts: { url: apiConfig.baseUrl + 'search' },

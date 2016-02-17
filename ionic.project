@@ -11,8 +11,9 @@
   ],
   "proxies": [
     {
-      "path": "/storefrontapi",
-      "proxyUrl": "http://demo.virtocommerce.com/storefrontapi"
+      "path": "/storefront",
+      "proxyUrl": "http://demo.virtocommerce.com",
+      "proxyUrldev": "http://localhost/storefront"
     }
   ] 
 }
