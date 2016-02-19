@@ -7,7 +7,8 @@ angular.module('virtoshopApp')
         $scope.allVariationPropsMap = {};
 
         function initialize() {
-            searchAPI.getProduct({ id: $stateParams.id }, function (result) {
+            searchAPI.getProducts({ productIds: [$stateParams.id] }, function (data) {
+                var result = data[0];
                 //Current product is also a variation (titular)
                 allVariations = [result].concat(result.variations);
                 $scope.allVariationPropsMap = getFlatternDistinctPropertiesMap(allVariations);

@@ -8,27 +8,25 @@ angular.module('virtoshopApp')
 
 .factory('searchAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
     return $resource(null, { id: '@id' }, {
+        search: { url: apiConfig.baseUrl + 'catalog/search', method: 'POST' },
         searchProducts: { url: apiConfig.baseUrl + 'search' },
-        getCategories: { url: apiConfig.baseUrl + 'search/categories' },
-        getCategoryProducts: { url: apiConfig.baseUrl + 'search/products' },
-        getProduct: { url: apiConfig.baseUrl + 'search/products/:id' }
+        getProducts: { url: apiConfig.baseUrl + 'products', isArray: true }
     });
 }])
 
 .factory('cartAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
     return $resource(apiConfig.baseUrl + 'cart', { id: '@id' }, {
         getCart: {},
-        addLineItem: { url: apiConfig.baseUrl + 'cart/additem', method: 'POST' },
-        changeLineItem: { url: apiConfig.baseUrl + 'cart/changeitem', method: 'POST' },
-        removeLineItem: { url: apiConfig.baseUrl + 'cart/removeitem', method: 'POST' },
+        addLineItem: { url: apiConfig.baseUrl + 'cart/items', method: 'POST' },
+        changeLineItem: { url: apiConfig.baseUrl + 'cart/items', method: 'PUT' },
+        removeLineItem: { url: apiConfig.baseUrl + 'cart/items', method: 'DELETE' },
         // query: { isArray: true },
         // update: { method: 'PUT' },
-        getCountries: { url: apiConfig.baseUrl + 'search/common/getcountries', isArray: true },
-        addAddress: { url: apiConfig.baseUrl + 'cart/addaddress', method: 'POST' },
-        getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shippingmethods', isArray: true },
-        setShippingMethod: { url: apiConfig.baseUrl + 'cart/shippingmethod', method: 'POST' },
+        getCountries: { url: apiConfig.baseUrl + 'countries', isArray: true },
+        getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shipments/:shipmentId/shippingmethods', isArray: true },
+        setShippingMethod: { url: apiConfig.baseUrl + 'cart/shipments', method: 'POST' },
         getAvailablePaymentMethods: { url: apiConfig.baseUrl + 'cart/paymentmethods', isArray: true },
-        setPaymentMethod: { url: apiConfig.baseUrl + 'cart/paymentmethod', method: 'POST' },
+        setPaymentMethod: { url: apiConfig.baseUrl + 'cart/payments', method: 'POST' },
         createOrder: { url: apiConfig.baseUrl + 'cart/createorder', method: 'POST' }
     });
 }])

@@ -1,7 +1,7 @@
 angular.module('virtoshopApp')
 
 // Home controller
-.controller('HomeCtrl', ['$scope', 'searchAPI', 'cartAPI', 'workContext', '$ionicNavBarDelegate', function ($scope, searchAPI, cartAPI, workContext, $ionicNavBarDelegate) {
+.controller('HomeCtrl', ['$scope', 'searchAPI', 'cartAPI', 'workContext', 'virtoshopApp.apiConfig', function ($scope, searchAPI, cartAPI, workContext, apiConfig) {
     // slider images
     $scope.slides = [
       { url: 'img/slide_1.jpg' },
@@ -14,7 +14,12 @@ angular.module('virtoshopApp')
     });
 
     // list categories
-    searchAPI.getCategories({}, function (data) {
+    searchAPI.search({
+        catalogId: apiConfig.catalogId,
+        responseGroup: 'WithCategories',
+        sortBy: "Priority",
+        searchInChildren: false
+    }, function (data) {
         $scope.entries = data.categories;
         // workContext.update(data);
     },
@@ -30,7 +35,7 @@ angular.module('virtoshopApp')
 }])
 
 // Category controller
-.controller('categoryController', ['$scope', '$stateParams', 'searchAPI', function ($scope, $stateParams, searchAPI) {
+.controller('categoryController', ['$scope', '$stateParams', 'searchAPI', 'virtoshopApp.apiConfig', function ($scope, $stateParams, searchAPI, apiConfig) {
     $scope.name = $stateParams.name;
 
     //pagination settings
@@ -45,7 +50,8 @@ angular.module('virtoshopApp')
     };
 
     function loadDataPage() {
-        searchAPI.getCategoryProducts({
+        searchAPI.search({
+            catalogId: apiConfig.catalogId,
             categoryId: $stateParams.id,
             page: pageSettings.currentPage
             //skip: (pageSettings.currentPage - 1) * pageSettings.itemsPerPageCount,
@@ -58,7 +64,7 @@ angular.module('virtoshopApp')
                 $scope.entries = $scope.entries.concat(productsResult.products);
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             }
-        }, function (error) { console.log(error); });
+        }, function (error) { $scope.entries = undefined; console.log(error); });
     }
 
     loadDataPage();
@@ -66,16 +72,16 @@ angular.module('virtoshopApp')
 
 // Authentication controller
 // Put your login, register functions here
-.controller('AuthCtrl', ['$scope', '$ionicHistory', 'authAPI', '$http', function ($scope, $ionicHistory, authAPI,$http) {
+.controller('AuthCtrl', ['$scope', '$ionicHistory', 'authAPI', '$http', function ($scope, $ionicHistory, authAPI, $http) {
     // hide back button in next view
     $ionicHistory.nextViewOptions({
         disableBack: true
     });
-    
+
 
     $scope.login = function () {
         $scope.loginProgress = true;
-        $http.post('http://localhost:8100/storefront/Electronics/account/login/', { login: { Email: $scope.user.email, Password: $scope.user.password, rememberMe: true } }).then(
+        $http.post('http://localhost:8100/storefront/Electronics/account/login/', { email: $scope.user.email, password: $scope.user.password, rememberMe: true }).then(
 			function (results) {
 			    $state.go('home');
 			});

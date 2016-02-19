@@ -29,10 +29,11 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
 })
 
 .constant('virtoshopApp.apiConfig', {
+    catalogId: '25f5ea1b52e54ec1aa903d44cc889324',
     storeId: 'Clothing',
     currency: 'USD',
-    baseUrl: 'http://localhost:8100/storefront/Electronics/'
-    // baseUrl: 'http://demo.virtocommerce.com/Clothing/'
+    baseUrl: 'http://localhost:8100/storefrontapi/'
+    // baseUrl: 'http://demo.virtocommerce.com/storefrontapi/'
 })
 
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
