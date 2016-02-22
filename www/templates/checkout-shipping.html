@@ -4,7 +4,7 @@
 <ion-view view-title="Shipping">
     <ion-content class="checkout">
         <ion-list>
-            <ion-radio ng-model="checkout.shipmentMethodCode" ng-value="data.shipmentMethodCode" ng-repeat="data in checkout.availableShippingMethods">
+            <ion-radio ng-model="checkout.shipment.shipmentMethodCode" ng-value="data.shipmentMethodCode" ng-repeat="data in checkout.availableShippingMethods">
                 {{data.name}}
                 <p class="text-hint">{{data.price.formatedAmount}}</p>
             </ion-radio>
@@ -12,14 +12,14 @@
         <!-- Shipping address-->
         <div class="padding">
             <h4 class="text-center">Shipping address</h4>
-            <span ng-bind="checkout.shippingAddress.firstName"></span> <span ng-bind="checkout.shippingAddress.lastName"></span><br />
-            <span ng-bind="checkout.shippingAddress.line1"></span><span ng-if="checkout.shippingAddress.line2" ng-bind="', ' + checkout.shippingAddress.line2"></span><br />
-            <span ng-bind="checkout.shippingAddress.city"></span><span ng-if="checkout.shippingAddress.regionName" ng-bind="', ' + checkout.shippingAddress.regionName"></span>, <span ng-bind="checkout.shippingAddress.postalCode"></span><br />
-            <span ng-bind="checkout.shippingAddress.countryName"></span><br ng-if="checkout.shippingAddress.phone" />
-            <span ng-if="checkout.shippingAddress.phone" ng-bind="checkout.shippingAddress.phone"></span>
+            <span ng-bind="checkout.shipment.deliveryAddress.firstName"></span> <span ng-bind="checkout.shipment.deliveryAddress.lastName"></span><br />
+            <span ng-bind="checkout.shipment.deliveryAddress.line1"></span><span ng-if="checkout.shipment.deliveryAddress.line2" ng-bind="', ' + checkout.shipment.deliveryAddress.line2"></span><br />
+            <span ng-bind="checkout.shipment.deliveryAddress.city"></span><span ng-if="checkout.shipment.deliveryAddress.regionName" ng-bind="', ' + checkout.shipment.deliveryAddress.regionName"></span>, <span ng-bind="checkout.shipment.deliveryAddress.postalCode"></span><br />
+            <span ng-bind="checkout.shipment.deliveryAddress.countryName"></span><br ng-if="checkout.shipment.deliveryAddress.phone" />
+            <span ng-if="checkout.shipment.deliveryAddress.phone" ng-bind="checkout.shipment.deliveryAddress.phone"></span>
         </div>
         <div class="padding">
-            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.shipmentMethodCode || checkout.shippingMethodProcessing">
+            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.shipment.shipmentMethodCode || checkout.shippingMethodProcessing">
                 Next step
             </button>
         </div>

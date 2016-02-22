@@ -15,7 +15,7 @@ angular.module('virtoshopApp')
 }])
 
 .factory('cartAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
-    return $resource(apiConfig.baseUrl + 'cart', { id: '@id' }, {
+    return $resource(apiConfig.baseUrl + 'cart', null, {
         getCart: {},
         addLineItem: { url: apiConfig.baseUrl + 'cart/items', method: 'POST' },
         changeLineItem: { url: apiConfig.baseUrl + 'cart/items', method: 'PUT' },
@@ -23,8 +23,9 @@ angular.module('virtoshopApp')
         // query: { isArray: true },
         // update: { method: 'PUT' },
         getCountries: { url: apiConfig.baseUrl + 'countries', isArray: true },
+        getCountryRegions: { url: apiConfig.baseUrl + ':countryCode/regions', isArray: true },
         getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shipments/:shipmentId/shippingmethods', isArray: true },
-        setShippingMethod: { url: apiConfig.baseUrl + 'cart/shipments', method: 'POST' },
+        addOrUpdateShipment: { url: apiConfig.baseUrl + 'cart/shipments', method: 'POST' },
         getAvailablePaymentMethods: { url: apiConfig.baseUrl + 'cart/paymentmethods', isArray: true },
         setPaymentMethod: { url: apiConfig.baseUrl + 'cart/payments', method: 'POST' },
         createOrder: { url: apiConfig.baseUrl + 'cart/createorder', method: 'POST' }

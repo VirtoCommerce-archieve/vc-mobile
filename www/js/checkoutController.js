@@ -3,58 +3,48 @@ angular.module('virtoshopApp')
 .controller('checkoutAddressController', ['$scope', '$state', 'cartAPI', 'workContext', function ($scope, $state, cartAPI, workContext) {
     $scope.checkout = workContext.current.checkout = {};
 
-    $scope.setCountry = function (addressType, countryName) {
-        var country = _.findWhere($scope.checkout.countries, { name: countryName });
+    $scope.setCountry = function (address) {
+        var country = _.findWhere($scope.checkout.countries, { name: address.countryName });
         if (country) {
-            if (addressType == 'Shipping') {
-                $scope.checkout.shippingAddress.countryCode = country.code3;
-                $scope.checkout.shippingAddress.regionId = null;
-                $scope.checkout.shippingAddress.regionName = null;
-            }
-            if (addressType == 'Billing') {
-                $scope.checkout.billingAddress.countryCode = country.code3;
-                $scope.checkout.billingAddress.regionId = null;
-                $scope.checkout.billingAddress.regionName = null;
-            }
-            getRegions(country.code3);
-        }
-    }
+            address.countryCode = country.code3;
+            address.regionId = null;
+            address.regionName = null;
 
-    $scope.setCountryRegion = function (addressType, countryRegionName) {
-        var countryRegion = _.find($scope.checkout.countryRegions, function (c) { return c.Name == countryRegionName; });
-        if (countryRegion) {
-            if (addressType == 'Shipping') {
-                $scope.checkout.shippingAddress.RegionId = countryRegion.Code;
-            }
-            if (addressType == 'Billing') {
-                $scope.checkout.billingAddress.RegionId = countryRegion.Code;
-            }
+            getCountryRegions(country.code3);
         }
-    }
+    };
+
+    $scope.setCountryRegion = function (address) {
+        var countryRegion = _.findWhere($scope.checkout.countryRegions, { name: address.regionName });
+        if (countryRegion) {
+            address.regionId = countryRegion.code;
+        }
+    };
 
     $scope.selectAddress = function (addressType) {
     }
 
     $scope.submitStep = function () {
-        $scope.checkout.customerInformationProcessing = true;
-        cartAPI.setShippingMethod({ deliveryAddress: $scope.checkout.shippingAddress }, function () {
-            $scope.checkout.customerInformationProcessing = false;
+        $scope.checkout.shippingAddressProcessing = true;
+        cartAPI.addOrUpdateShipment($scope.checkout.shipment, function () {
+            $scope.checkout.shippingAddressProcessing = false;
+            $scope.checkout.shippingMethodProcessing = false;
             $state.go('checkout_shipping');
-        }, function (error) { $scope.checkout.customerInformationProcessing = false; });
+        }, function (error) { $scope.checkout.shippingAddressProcessing = false; });
     }
 
     function initialize() {
-        $scope.checkout.shippingAddress = { type: 'Shipping' };
         // getCurrentCustomer();
         getCountries();
-        refreshCheckout();
+        getCart();
     }
 
-    function refreshCheckout() {
-        $scope.checkout.couponProcessing = false;
-        $scope.checkout.customerInformationProcessing = false;
-        $scope.checkout.shippingMethodProcessing = false;
+    function getCart() {
+        $scope.checkout.shippingAddressProcessing = false;
         cartAPI.getCart(function (cart) {
+            var shipment = $scope.checkout.shipment = _.last(cart.shipments) ? _.last(cart.shipments) : {};
+            shipment.deliveryAddress = shipment.deliveryAddress || { deliveryAddress: { type: 'Shipping' } };
+
             $scope.checkout.id = cart.id;
             $scope.checkout.lineItems = cart.items;
             $scope.checkout.coupon = cart.coupon;
@@ -70,7 +60,7 @@ angular.module('virtoshopApp')
             if (!$scope.checkout.hasPhysicalProducts) {
                 $state.go('checkout_payment');
             }
-            $scope.checkout.hasCustomerInformation = checkAddress($scope.checkout.shippingAddress, _.any($scope.checkout.countryRegions));
+            $scope.checkout.hasCustomerInformation = checkAddress(shipment.deliveryAddress, _.any($scope.checkout.countryRegions));
             $scope.checkout.hasShippingMethod = _.any(cart.shipments);
         });
     }
@@ -79,28 +69,30 @@ angular.module('virtoshopApp')
         $scope.checkout.countries = cartAPI.getCountries();
     }
 
-    function getRegions(countryCode3) {
-        var country = _.findWhere($scope.checkout.countries, { code3: countryCode3 });
-        $scope.checkout.countryRegions = country ? country.regions : null;
+    function getCountryRegions(countryCode) {
+        // $scope.checkout.selectedCountry = _.find($scope.checkout.countries, function (c) { return c.code3 == countryCode });
+        cartAPI.getCountryRegions({ countryCode: countryCode }, function (results) {
+            $scope.checkout.countryRegions = results || [];
+        });
     }
 
     function getShippingAddress(cartAddress) {
-        //$scope.checkout.shippingAddress.email = $scope.checkout.shippingAddress.email || $scope.customer.email || cartAddress.email;
-        $scope.checkout.shippingAddress.email = $scope.checkout.shippingAddress.email || cartAddress.email;
-        $scope.checkout.shippingAddress.firstName = $scope.checkout.shippingAddress.firstName || cartAddress.firstName;
-        $scope.checkout.shippingAddress.lastName = $scope.checkout.shippingAddress.lastName || cartAddress.lastName;
-        $scope.checkout.shippingAddress.organization = $scope.checkout.shippingAddress.organization || cartAddress.organization;
-        $scope.checkout.shippingAddress.line1 = $scope.checkout.shippingAddress.line1 || cartAddress.line1;
-        $scope.checkout.shippingAddress.line2 = $scope.checkout.shippingAddress.line2 || cartAddress.line2;
-        $scope.checkout.shippingAddress.city = $scope.checkout.shippingAddress.city || cartAddress.city;
-        $scope.checkout.shippingAddress.countryCode = $scope.checkout.shippingAddress.countryCode || cartAddress.countryCode;
-        $scope.checkout.shippingAddress.countryName = $scope.checkout.shippingAddress.countryName || cartAddress.countryName;
-        $scope.checkout.shippingAddress.regionId = $scope.checkout.shippingAddress.regionId || cartAddress.regionId;
-        $scope.checkout.shippingAddress.regionName = $scope.checkout.shippingAddress.regionName || cartAddress.regionName;
-        $scope.checkout.shippingAddress.postalCode = $scope.checkout.shippingAddress.postalCode || cartAddress.postalCode;
-        $scope.checkout.shippingAddress.phone = $scope.checkout.shippingAddress.phone || cartAddress.phone;
-        if ($scope.checkout.shippingAddress.countryCode) {
-            getRegions($scope.checkout.shippingAddress.countryCode);
+        //$scope.checkout.shipment.deliveryAddress.email = $scope.checkout.shipment.deliveryAddress.email || $scope.customer.email || cartAddress.email;
+        $scope.checkout.shipment.deliveryAddress.email = $scope.checkout.shipment.deliveryAddress.email || cartAddress.email;
+        $scope.checkout.shipment.deliveryAddress.firstName = $scope.checkout.shipment.deliveryAddress.firstName || cartAddress.firstName;
+        $scope.checkout.shipment.deliveryAddress.lastName = $scope.checkout.shipment.deliveryAddress.lastName || cartAddress.lastName;
+        $scope.checkout.shipment.deliveryAddress.organization = $scope.checkout.shipment.deliveryAddress.organization || cartAddress.organization;
+        $scope.checkout.shipment.deliveryAddress.line1 = $scope.checkout.shipment.deliveryAddress.line1 || cartAddress.line1;
+        $scope.checkout.shipment.deliveryAddress.line2 = $scope.checkout.shipment.deliveryAddress.line2 || cartAddress.line2;
+        $scope.checkout.shipment.deliveryAddress.city = $scope.checkout.shipment.deliveryAddress.city || cartAddress.city;
+        $scope.checkout.shipment.deliveryAddress.countryCode = $scope.checkout.shipment.deliveryAddress.countryCode || cartAddress.countryCode;
+        $scope.checkout.shipment.deliveryAddress.countryName = $scope.checkout.shipment.deliveryAddress.countryName || cartAddress.countryName;
+        $scope.checkout.shipment.deliveryAddress.regionId = $scope.checkout.shipment.deliveryAddress.regionId || cartAddress.regionId;
+        $scope.checkout.shipment.deliveryAddress.regionName = $scope.checkout.shipment.deliveryAddress.regionName || cartAddress.regionName;
+        $scope.checkout.shipment.deliveryAddress.postalCode = $scope.checkout.shipment.deliveryAddress.postalCode || cartAddress.postalCode;
+        $scope.checkout.shipment.deliveryAddress.phone = $scope.checkout.shipment.deliveryAddress.phone || cartAddress.phone;
+        if ($scope.checkout.shipment.deliveryAddress.countryCode) {
+            getCountryRegions($scope.checkout.shipment.deliveryAddress.countryCode);
         }
         // selectAddress('Shipping');
     }
@@ -125,7 +117,7 @@ angular.module('virtoshopApp')
 
     $scope.submitStep = function () {
         $scope.checkout.shippingMethodProcessing = true;
-        cartAPI.setShippingMethod({ shippingMethodCode: $scope.checkout.shipmentMethodCode }, function () {
+        cartAPI.addOrUpdateShipment($scope.checkout.shipment, function () {
             $state.go('checkout_payment');
         });
     };
@@ -149,7 +141,7 @@ angular.module('virtoshopApp')
         cartAPI.getAvailableShippingMethods({ shipmentId: $scope.checkout.shipments[0].id }, function (availableShippingMethods) {
             $scope.checkout.availableShippingMethods = availableShippingMethods;
             if (availableShippingMethods.length == 1) {
-                $scope.checkout.shipmentMethodCode = availableShippingMethods[0].shipmentMethodCode;
+                $scope.checkout.shipment.shipmentMethodCode = availableShippingMethods[0].shipmentMethodCode;
             }
         });
     }
@@ -183,7 +175,7 @@ angular.module('virtoshopApp')
         //getCurrentCustomer();
         //getCountries();
         getAvailablePaymentMethods();
-        refreshCheckout();
+        getCart();
     }
 
     function getAvailablePaymentMethods() {
@@ -195,7 +187,7 @@ angular.module('virtoshopApp')
         });
     }
 
-    function refreshCheckout() {
+    function getCart() {
         cartAPI.getCart(function (cart) {
             $scope.checkout.subtotal = cart.subTotal;
             $scope.checkout.shippingTotal = cart.shippingTotal;

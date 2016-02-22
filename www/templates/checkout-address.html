@@ -6,36 +6,40 @@
         <form accept-charset="UTF-8" name="formCustomerInformation" novalidate="novalidate">
             <div class="list">
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.firstName" type="text" placeholder="First name" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.firstName" type="text" placeholder="First name" required/>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.lastName" type="text" placeholder="Last name" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.lastName" type="text" placeholder="Last name" required/>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.line1" type="text" placeholder="Address line 1" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.line1" type="text" placeholder="Address line 1" required/>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.line2" type="text" placeholder="Address line 2" />
+                    <input ng-model="checkout.shipment.deliveryAddress.line2" type="text" placeholder="Address line 2" />
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.city" type="text" placeholder="City" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.city" type="text" placeholder="City" required/>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.postalCode" type="text" placeholder="Zip" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.postalCode" type="text" placeholder="Zip" required/>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.countryName" type="text" placeholder="Country" required/>
+                    <select ng-model="checkout.shipment.deliveryAddress.countryName" ng-options="x.name as x.name for x in checkout.countries" ng-change="setCountry(checkout.shipment.deliveryAddress)" required>
+                        <option value="" disabled selected>Country</option>
+                    </select>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.regionName" type="text" placeholder="State" required/>
+                    <select ng-model="checkout.shipment.deliveryAddress.regionName" ng-options="x.name as x.name for x in checkout.countryRegions" ng-change="setCountryRegion(checkout.shipment.deliveryAddress)" ng-required="checkout.countryRegions.length>0" ng-disabled="!checkout.countryRegions.length">
+                        <option value="" disabled selected>State</option>
+                    </select>
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shippingAddress.email" type="email" placeholder="Email" required />
+                    <input ng-model="checkout.shipment.deliveryAddress.email" type="email" placeholder="Email" required />
                 </div>
             </div>
             <!-- Next button -->
             <div class="padding">
-                <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="formCustomerInformation.$invalid || checkout.customerInformationProcessing">
+                <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="formCustomerInformation.$invalid || checkout.shippingAddressProcessing">
                     Next step
                 </button>
             </div>
