@@ -7,7 +7,7 @@
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet">
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/angular-resource/angular-resource.min.js"></script>
@@ -62,23 +62,21 @@
                         <i class="icon ion-home"></i>
                         Home
                     </div>
-                    <div class="item item-icon-lef item-divider" ui-sref="category({id: '{{item.id}}', name: '{{item.name}}'})" ng-repeat="item in entries">
-                        <!--<i class="icon ion-man"></i>-->
+                    <div class="item item-icon-lef item-divider" ui-sref="category({id: &apos;{{item.id}}&apos;, name: &apos;{{item.name}}&apos;})" ng-repeat="item in entries">
                         {{ item.name }}
                     </div>
-
-                    <div class="item item-icon-lef item-divider">
+                    <!--<div class="item item-icon-lef item-divider">
                         <i class="icon ion-ios-gear"></i>
                         Application
-                    </div>
-                    <div class="item item-icon-lef" ui-sref="login">
+                    </div>-->
+                    <!--<div class="item item-icon-lef" ui-sref="login">
                         <i class="icon ion-android-exit"></i>
                         Log in
                     </div>
                     <div class="item item-icon-lef" ui-sref="login">
                         <i class="icon ion-android-exit"></i>
                         Logout
-                    </div>
+                    </div>-->
                 </div>
             </ion-content>
         </ion-side-menu>

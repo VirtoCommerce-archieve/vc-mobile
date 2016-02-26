@@ -4,6 +4,13 @@ angular.module('virtoshopApp')
     var timer;
     $scope.cart = workContext.current.cart;
 
+    //$scope.$on("$ionicView.enter", function (scopes, states) {
+    $scope.$on("$ionicView.enter", function () {
+        $scope.isUpdating = true;
+        $scope.errorOccured = false;
+        refreshCart();
+    });
+    
     $scope.changeLineItem = function (lineItem, origQty) {
         $timeout.cancel(timer);
         timer = $timeout(function () {
@@ -46,24 +53,15 @@ angular.module('virtoshopApp')
             }, 200);
         }
     };
-
-
-    function initialize() {
-        $scope.isUpdating = false;
-        $scope.errorOccured = false;
-        refreshCart();
-    }
-
+    
     function refreshCart() {
         cartAPI.getCart(function (result) {
             angular.copy(result, workContext.current.cart);
             $scope.cart = workContext.current.cart;
 
-            //$scope.isUpdating = false;
+            $scope.isUpdating = false;
             //$scope.errorOccured = false;
         });
     }
-
-    initialize();
 }])
 ;

@@ -64,6 +64,26 @@ angular.module('virtoshopApp')
                 $scope.entries = $scope.entries.concat(productsResult.products);
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             }
+
+            // request actual prices
+            if (_.any(productsResult.products)) {
+                var requestParams = _.map(productsResult.products, function (x) {
+                    return {
+                        catalogId: x.catalogId,
+                        categoryId: x.categoryId,
+                        id: x.id,
+                    };
+                });
+
+                searchAPI.getActualProductPrices(requestParams, function (prices) {
+                    _.each(prices, function (x) {
+                        var item = _.findWhere(productsResult.products, { id: x.productId });
+                        if (item) {
+                            item.price = x;
+                        }
+                    });
+                });
+            }
         }, function (error) { $scope.entries = undefined; console.log(error); });
     }
 

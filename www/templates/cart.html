@@ -3,7 +3,7 @@
 -->
 <ion-view view-title="Cart">
     <ion-content class="cart">
-        <div class="list">
+        <div class="list" ng-if="cart.items.length">
             <div class="item item-thumbnail-left" ng-repeat="data in cart.items track by data.id">
                 <img ng-src="{{data.imageUrl}}" alt="" />
                 <h2 class="positive">{{data.name}}</h2>
@@ -71,15 +71,18 @@
               <div class="pull-right">$6</div>
             </div>-->
             <div class="item stable-bg">
-                <b>Total</b>
-                <div class="pull-right">{{cart.total.formatedAmount}}</div>
+                <b>Subtotal</b>
+                <div class="pull-right">{{cart.subTotal.formatedAmount}}</div>
             </div>
         </div>
         <!-- Checkout button -->
         <div class="padding">
-            <button class="button button-block button-energized" ui-sref="checkout_address" ng-disabled="!cart.itemsCount">
+            <button class="button button-block button-energized" ui-sref="checkout_address" ng-disabled="!cart.itemsCount" ng-if="cart.items.length">
                 Checkout
             </button>
+            <div ng-if="!cart.items.length && !isUpdating" ui-sref="home" class="item stable-bg">
+                <b>Cart is empty. Continue shopping</b>
+            </div>
         </div>
     </ion-content>
 </ion-view>

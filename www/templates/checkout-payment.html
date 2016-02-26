@@ -22,7 +22,7 @@
             </ion-radio>-->
         </ion-list>
         <div class="list">
-            <div class="item">
+            <!--<div class="item">
                 <input type="text" placeholder="Credit card #No" />
             </div>
             <div class="item">
@@ -30,7 +30,17 @@
             </div>
             <div class="item">
                 <input type="text" placeholder="CVV-Code" />
-            </div>
+            </div>-->
+        </div>
+        <div class="item">
+            <div>Subtotal<div class="pull-right">{{checkout.subTotal.formatedAmount}}</div></div>
+            <div>Discount<div class="pull-right">{{checkout.discountTotal.formatedAmount}}</div></div>
+            <div>Shipping<div class="pull-right">{{checkout.shippingTotal.formatedAmount}}</div></div>
+            <div>Taxes<div class="pull-right">{{checkout.taxTotal.formatedAmount}}</div></div>
+        </div>
+        <div class="item stable-bg">
+            <b>Total</b>
+            <div class="pull-right">{{checkout.total.formatedAmount}}</div>
         </div>
         <div class="padding">
             <button class="button button-block button-energized" ng-click="completeOrder()" ng-disabled="!checkout.paymentMethodCode || checkout.orderProcessing">

@@ -32,11 +32,12 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
     catalogId: '25f5ea1b52e54ec1aa903d44cc889324',
     storeId: 'Clothing',
     currency: 'USD',
-    baseUrl: 'http://localhost:8100/storefrontapi/'
+    baseUrl: 'storefrontapi/'
+    // baseUrl: 'http://vc-mobile02.azurewebsites.net/storefrontapi/'
     // baseUrl: 'http://demo.virtocommerce.com/storefrontapi/'
 })
 
-.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
@@ -117,4 +118,6 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/home');
 
+    // Disable views cache globally
+    $ionicConfigProvider.views.maxCache(0);
 }]);

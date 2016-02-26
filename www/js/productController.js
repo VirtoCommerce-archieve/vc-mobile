@@ -6,50 +6,44 @@ angular.module('virtoshopApp')
         $scope.selectedVariation = { name: $stateParams.name };
         $scope.allVariationPropsMap = {};
 
-        function initialize() {
-            searchAPI.getProducts({ productIds: [$stateParams.id] }, function (data) {
-                var result = data[0];
-                //Current product is also a variation (titular)
-                allVariations = [result].concat(result.variations);
-                $scope.allVariationPropsMap = getFlatternDistinctPropertiesMap(allVariations);
-
-                //Auto select initial product as default variation  (its possible because all our products is variations)
-                var propertyMap = getVariationPropertyMap(result);
-                _.each(_.keys(propertyMap), function (x) {
-                    $scope.checkProperty(propertyMap[x][0])
-                });
-                $scope.selectedVariation = result;
-                $ionicSlideBoxDelegate.update();
-            },
-              function (error) { console.log(error); });
-        }
-
-        //Method called from View when users click one property value
-        $scope.checkProperty = function (property) {
-            //Select appropriate property and unselect previous selection
-            _.each($scope.allVariationPropsMap[property.displayName], function (x) {
-                x.selected = x === property;
-            });
-
-            //try to find best variation match for selected properties
-            $scope.selectedVariation = findVariationBySelectedProps(allVariations, getSelectedPropsMap($scope.allVariationPropsMap));
-            $ionicSlideBoxDelegate.update();
-        };
-
         $scope.addToCart = function (productId, quantity) {
             var cart = workContext.current.cart;
             //var initialItems = angular.copy(cart.items);
             //$scope.isCartModalVisible = true;
             //$scope.isUpdating = true;
             cartAPI.addLineItem({ id: productId, quantity: quantity }, null, function (result) {
-                workContext.current.cart.itemsCount = result.itemsCount;
-                // console.log("addLineItem:" + response);
-                // refreshCart();
-            },
-                function (error) {
-                    //$scope.cart.items = initialItems;
-                    showErrorMessage(2000);
+                cart.itemsCount = result.itemsCount;
+            });
+        };
+
+        function initialize() {
+            searchAPI.getProducts({ productIds: [$stateParams.id] }, function (data) {
+                var product = data[0];
+                //Current product is also a variation (titular)
+                allVariations = [product].concat(product.variations);
+                $scope.allVariationPropsMap = getFlatternDistinctPropertiesMap(allVariations);
+
+                //Auto select initial product as default variation  (its possible because all our products is variations)
+                var propertyMap = getVariationPropertyMap(product);
+                _.each(_.keys(propertyMap), function (x) {
+                    $scope.checkProperty(propertyMap[x][0])
                 });
+                $scope.selectedVariation = product;
+                $ionicSlideBoxDelegate.update();
+            },
+              function (error) { console.log(error); });
+        }
+
+        //Method called from View when user clicks one property value
+        $scope.checkProperty = function (property) {
+            //Select appropriate property and unselect previous selection
+            _.each($scope.allVariationPropsMap[property.displayName], function (x) {
+                x.selected = x === property;
+            });
+
+            //try to find the best variation match for selected properties
+            $scope.selectedVariation = findVariationBySelectedProps(allVariations, getSelectedPropsMap($scope.allVariationPropsMap));
+            $ionicSlideBoxDelegate.update();
         };
 
         // generate array from number

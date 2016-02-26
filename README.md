@@ -11,10 +11,10 @@ npm install -g ionic
 1. Open the project in your favorite development tool (VS, VS Code, ...). In case of Visual Studio 2015, it should restore the required npm and bower packages in background automatically.
 2. **Serve the app for testing.** Go to the root directory of the vc-mobile repository in command prompt. Type:
 ```sh
-ionic serve
+ionic serve --lab
 ```
-The site http://localhost:8100/ opens in browser. 
-3. Navigate to http://localhost:8100/ionic-lab for mobile-like view instead and check the app running. 
+The site http://localhost:8100/ionic-lab opens in browser with iOS and Android devices emulated.
+3. Check and test the app running. 
 4. Can minimize, but don't close the command prompt.
 5. Start modifying source code files under www folder. All updates to html and js will be automatically synchronized in browser.
 

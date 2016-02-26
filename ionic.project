@@ -1,6 +1,6 @@
 {
   "name": "VirtoShop",
-  "app_id": "2366dc4b",
+  "app_id": "9eb6619b",
   "gulpStartupTasks": [
     "sass",
     "watch"
@@ -15,5 +15,5 @@
       "proxyUrl": "http://demo.virtocommerce.com/storefrontapi",
       "proxyUrldev": "http://localhost/storefront/storefrontapi"
     }
-  ] 
+  ]
 }

@@ -47,7 +47,7 @@
                 <span class="old-price" ng-if="selectedVariation.price.actualPrice.amount < selectedVariation.price.listPrice.amount">${{ selectedVariation.price.listPrice.amount }}</span>
             </div>
             <div class="col">
-                <button class="button button-block button-energized" ng-click="addToCart(selectedVariation.id, 1)">
+                <button class="button button-block button-energized" ng-click="addToCart(selectedVariation.id, 1)" ng-disabled="!selectedVariation">
                     <i class="ion-bag"></i>
                     Add to Cart
                 </button>

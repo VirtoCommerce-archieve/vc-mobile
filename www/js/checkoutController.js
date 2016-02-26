@@ -48,11 +48,6 @@ angular.module('virtoshopApp')
             $scope.checkout.id = cart.id;
             $scope.checkout.lineItems = cart.items;
             $scope.checkout.coupon = cart.coupon;
-            $scope.checkout.subtotal = cart.subTotal;
-            $scope.checkout.shippingTotal = cart.shippingTotal;
-            $scope.checkout.taxTotal = cart.taxTotal;
-            $scope.checkout.discountTotal = cart.discountTotal;
-            $scope.checkout.total = cart.total;
             $scope.checkout.hasPhysicalProducts = cart.hasPhysicalProducts;
             if ($scope.checkout.hasPhysicalProducts) {
                 getShippingAddress(cart.defaultShippingAddress);
@@ -61,7 +56,6 @@ angular.module('virtoshopApp')
                 $state.go('checkout_payment');
             }
             $scope.checkout.hasCustomerInformation = checkAddress(shipment.deliveryAddress, _.any($scope.checkout.countryRegions));
-            $scope.checkout.hasShippingMethod = _.any(cart.shipments);
         });
     }
 
@@ -125,20 +119,14 @@ angular.module('virtoshopApp')
     function initialize() {
         $scope.checkout.shippingMethodProcessing = false;
         cartAPI.getCart(function (cart) {
-            $scope.checkout.subtotal = cart.subTotal;
-            $scope.checkout.shipments = cart.shipments;
-            $scope.checkout.shippingTotal = cart.shippingTotal;
-            $scope.checkout.taxTotal = cart.taxTotal;
-            $scope.checkout.discountTotal = cart.discountTotal;
-            $scope.checkout.total = cart.total;
-            $scope.checkout.hasShippingMethod = _.any(cart.shipments);
-
+            $scope.checkout.shipment = _.last(cart.shipments);
+            
             getAvailableShippingMethods();
         });
     }
 
     function getAvailableShippingMethods() {
-        cartAPI.getAvailableShippingMethods({ shipmentId: $scope.checkout.shipments[0].id }, function (availableShippingMethods) {
+        cartAPI.getAvailableShippingMethods({ shipmentId: $scope.checkout.shipment.id }, function (availableShippingMethods) {
             $scope.checkout.availableShippingMethods = availableShippingMethods;
             if (availableShippingMethods.length == 1) {
                 $scope.checkout.shipment.shipmentMethodCode = availableShippingMethods[0].shipmentMethodCode;
@@ -189,10 +177,10 @@ angular.module('virtoshopApp')
 
     function getCart() {
         cartAPI.getCart(function (cart) {
-            $scope.checkout.subtotal = cart.subTotal;
+            $scope.checkout.subTotal = cart.subTotal;
+            $scope.checkout.discountTotal = cart.discountTotal;
             $scope.checkout.shippingTotal = cart.shippingTotal;
             $scope.checkout.taxTotal = cart.taxTotal;
-            $scope.checkout.discountTotal = cart.discountTotal;
             $scope.checkout.total = cart.total;
 
             getBillingAddress(_.last(cart.shipments).deliveryAddress, cart.defaultBillingAddress);
