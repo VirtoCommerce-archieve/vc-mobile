@@ -1,17 +1,43 @@
 angular.module('virtoshopApp')
 // Checkout address step
-.controller('checkoutAddressController', ['$scope', '$state', 'cartAPI', 'workContext', function ($scope, $state, cartAPI, workContext) {
-    $scope.checkout = workContext.current.checkout = {};
+.controller('checkoutAddressController', ['$scope', '$state', 'filterFilter', 'cartAPI', 'workContext', function ($scope, $state, filterFilter, cartAPI, workContext) {
+    $scope.checkout = workContext.current.checkout = { countries: [], countryRegions: [], selectedRegions: [] };
+
+    $scope.searchCountries = function (query, isInitializing) {
+        return filterFilter($scope.checkout.countries, query);
+    };
+
+    $scope.selectCountry = function (callback) {
+        $scope.checkout.shipment.deliveryAddress.countryName = callback.item.name;
+        $scope.checkout.shipment.deliveryAddress.countryCode = callback.item.code3;
+        $scope.checkout.shipment.deliveryAddress.regionName = null;
+        $scope.checkout.shipment.deliveryAddress.regionId = null;
+        $scope.checkout.selectedRegions = [];
+        getCountryRegions(callback.item.code3);
+    };
 
     $scope.setCountry = function (address) {
         var country = _.findWhere($scope.checkout.countries, { name: address.countryName });
         if (country) {
             address.countryCode = country.code3;
-            address.regionId = null;
             address.regionName = null;
+            address.regionId = null;
 
             getCountryRegions(country.code3);
         }
+    };
+
+    $scope.searchRegions = function (query, isInitializing) {
+        if (isInitializing) {
+            return []
+        } else {
+            return filterFilter($scope.checkout.countryRegions, query);
+        }
+    };
+
+    $scope.selectRegion = function (callback) {
+        $scope.checkout.shipment.deliveryAddress.regionName = callback.item.name;
+        $scope.checkout.shipment.deliveryAddress.regionId = callback.item.code;
     };
 
     $scope.setCountryRegion = function (address) {
@@ -120,7 +146,7 @@ angular.module('virtoshopApp')
         $scope.checkout.shippingMethodProcessing = false;
         cartAPI.getCart(function (cart) {
             $scope.checkout.shipment = _.last(cart.shipments);
-            
+
             getAvailableShippingMethods();
         });
     }

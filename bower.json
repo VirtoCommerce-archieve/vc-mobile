@@ -2,8 +2,9 @@
   "name": "VirtoShopStarter",
   "private": true,
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.2.1",
     "angular-resource": "1.4.3",
+    "ionic": "driftyco/ionic-bower#1.2.1",
+    "ion-autocomplete": "0.3.1",
     "underscore": "1.8.3"
   },
   "resolutions": {

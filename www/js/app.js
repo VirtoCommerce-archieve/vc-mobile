@@ -1,5 +1,5 @@
 // Ionic Starter App 'virtoshopApp'.
-angular.module('virtoshopApp', ['ionic', 'ngResource'])
+angular.module('virtoshopApp', ['ionic', 'ngResource', 'ion-autocomplete'])
 .run(['$ionicPlatform', '$http', 'virtoshopApp.apiConfig', function ($ionicPlatform, $http, apiConfig) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard for form inputs)
@@ -30,11 +30,9 @@ angular.module('virtoshopApp', ['ionic', 'ngResource'])
 
 .constant('virtoshopApp.apiConfig', {
     catalogId: '25f5ea1b52e54ec1aa903d44cc889324',
-    storeId: 'Clothing',
-    currency: 'USD',
-    baseUrl: 'storefrontapi/'
-    // baseUrl: 'http://vc-mobile02.azurewebsites.net/storefrontapi/'
-    // baseUrl: 'http://demo.virtocommerce.com/storefrontapi/'
+    // :storeId/storefrontapi/
+    //baseUrl: 'Clothing/storefrontapi/'
+    baseUrl: 'http://demo.virtocommerce.com/Clothing/storefrontapi/'
 })
 
 .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

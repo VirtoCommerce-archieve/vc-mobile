@@ -6,32 +6,41 @@
         <form accept-charset="UTF-8" name="formCustomerInformation" novalidate="novalidate">
             <div class="list">
                 <div class="item">
-                    <input ng-model="checkout.shipment.deliveryAddress.firstName" type="text" placeholder="First name" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.firstName" type="text" placeholder="First name" required />
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shipment.deliveryAddress.lastName" type="text" placeholder="Last name" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.lastName" type="text" placeholder="Last name" required />
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shipment.deliveryAddress.line1" type="text" placeholder="Address line 1" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.line1" type="text" placeholder="Address line 1" required />
                 </div>
                 <div class="item">
                     <input ng-model="checkout.shipment.deliveryAddress.line2" type="text" placeholder="Address line 2" />
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shipment.deliveryAddress.city" type="text" placeholder="City" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.city" type="text" placeholder="City" required />
                 </div>
                 <div class="item">
-                    <input ng-model="checkout.shipment.deliveryAddress.postalCode" type="text" placeholder="Zip" required/>
+                    <input ng-model="checkout.shipment.deliveryAddress.postalCode" type="text" placeholder="Zip" required />
                 </div>
                 <div class="item">
-                    <select ng-model="checkout.shipment.deliveryAddress.countryName" ng-options="x.name as x.name for x in checkout.countries" ng-change="setCountry(checkout.shipment.deliveryAddress)" required>
-                        <option value="" disabled selected>Country</option>
-                    </select>
+                    <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" max-selected-items="1" placeholder="Country" required
+                           ng-model="checkout.shipment.deliveryAddress.countryName"
+                           item-value-key="name"
+                           item-view-value-key="name"
+                           items-method="searchCountries(query)"
+                           items-clicked-method="selectCountry(callback)"
+                           selected-items-label="Selected country:" />
                 </div>
                 <div class="item">
-                    <select ng-model="checkout.shipment.deliveryAddress.regionName" ng-options="x.name as x.name for x in checkout.countryRegions" ng-change="setCountryRegion(checkout.shipment.deliveryAddress)" ng-required="checkout.countryRegions.length>0" ng-disabled="!checkout.countryRegions.length">
-                        <option value="" disabled selected>State</option>
-                    </select>
+                    <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" max-selected-items="1" placeholder="Region"
+                           ng-model="checkout.shipment.deliveryAddress.regionName"
+                           item-value-key="name"
+                           item-view-value-key="name"
+                           items-method="searchRegions(query)"
+                           items-clicked-method="selectRegion(callback)"
+                           external-model="checkout.selectedRegions"
+                           selected-items-label="Selected region:" />
                 </div>
                 <div class="item">
                     <input ng-model="checkout.shipment.deliveryAddress.email" type="email" placeholder="Email" required />
