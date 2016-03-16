@@ -14,9 +14,8 @@ angular.module('virtoshopApp')
     });
 
     // list categories
-    searchAPI.search({
+    searchAPI.categoriesSearch({
         catalogId: apiConfig.catalogId,
-        responseGroup: 'WithCategories',
         sortBy: "Priority",
         searchInChildren: false
     }, function (data) {
@@ -57,7 +56,7 @@ angular.module('virtoshopApp')
             //skip: (pageSettings.currentPage - 1) * pageSettings.itemsPerPageCount,
             //take: pageSettings.itemsPerPageCount
         }, function (productsResult) {
-            pageSettings.totalItems = productsResult.totalItemCount;
+            pageSettings.totalItems = productsResult.metaData.totalItemCount;
             if (pageSettings.currentPage === 1) {
                 $scope.entries = productsResult.products;
             } else {

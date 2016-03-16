@@ -8,6 +8,7 @@ angular.module('virtoshopApp')
 
 .factory('searchAPI', ['$resource', 'virtoshopApp.apiConfig', function ($resource, apiConfig) {
     return $resource(null, { id: '@id' }, {
+        categoriesSearch: { url: apiConfig.baseUrl + 'categories/search', method: 'POST' },
         search: { url: apiConfig.baseUrl + 'catalog/search', method: 'POST' },
         getActualProductPrices: { url: apiConfig.baseUrl + 'pricing/actualprices', method: 'POST', isArray: true },
         searchProducts: { url: apiConfig.baseUrl + 'search' },
