@@ -10,12 +10,12 @@ angular.module('virtoshopApp')
         $scope.errorOccured = false;
         refreshCart();
     });
-    
+
     $scope.changeLineItem = function (lineItem, origQty) {
         $timeout.cancel(timer);
         timer = $timeout(function () {
             $scope.isUpdating = true;
-            cartAPI.changeLineItem({ lineItemId: lineItem.id, quantity: lineItem.quantity }, null, function () {
+            cartAPI.changeLineItem({ lineItemId: lineItem.id, quantity: lineItem.quantity }, function () {
                 refreshCart();
             },
             function (response) {
@@ -53,7 +53,7 @@ angular.module('virtoshopApp')
             }, 200);
         }
     };
-    
+
     function refreshCart() {
         cartAPI.getCart(function (result) {
             angular.copy(result, workContext.current.cart);

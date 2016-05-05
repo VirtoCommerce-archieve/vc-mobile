@@ -11,7 +11,7 @@ angular.module('virtoshopApp')
             //var initialItems = angular.copy(cart.items);
             //$scope.isCartModalVisible = true;
             //$scope.isUpdating = true;
-            cartAPI.addLineItem({ id: productId, quantity: quantity }, null, function (result) {
+            cartAPI.addLineItem({ id: productId, quantity: quantity }, function (result) {
                 cart.itemsCount = result.itemsCount;
             });
         };
