@@ -4,9 +4,9 @@
 <ion-view view-title="Shipping">
     <ion-content class="checkout">
         <ion-list>
-            <ion-radio ng-model="checkout.shipment.shipmentMethodCode" ng-value="data.shipmentMethodCode" ng-repeat="data in checkout.availableShippingMethods">
+            <ion-radio ng-model="checkout.selectedShippingMethod" ng-value="data" ng-repeat="data in checkout.availableShippingMethods">
                 {{data.name}}
-                <p class="text-hint">{{data.price.formatedAmount}}</p>
+                <p class="text-hint">{{data.price.formatedAmount}}<span ng-if="data.optionDescription"> - {{data.optionDescription}}</span></p>
             </ion-radio>
         </ion-list>
         <!-- Shipping address-->
@@ -19,7 +19,7 @@
             <span ng-if="checkout.shipment.deliveryAddress.phone" ng-bind="checkout.shipment.deliveryAddress.phone"></span>
         </div>
         <div class="padding">
-            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.shipment.shipmentMethodCode || checkout.shippingMethodProcessing">
+            <button class="button button-block button-energized" ng-click="submitStep()" ng-disabled="!checkout.selectedShippingMethod || checkout.shippingMethodProcessing">
                 Next step
             </button>
         </div>

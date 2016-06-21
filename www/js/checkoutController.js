@@ -131,15 +131,17 @@ angular.module('virtoshopApp')
     initialize();
 }])
 
-    // Checkout Shipping step
+    // Checkout shippingMethod step
 .controller('checkoutShippingController', ['$scope', '$state', 'cartAPI', 'workContext', function ($scope, $state, cartAPI, workContext) {
     $scope.checkout = workContext.current.checkout;
 
     $scope.submitStep = function () {
         $scope.checkout.shippingMethodProcessing = true;
+        $scope.checkout.shipment.shipmentMethodCode = $scope.checkout.selectedShippingMethod.shipmentMethodCode;
+        $scope.checkout.shipment.shipmentMethodOption = $scope.checkout.selectedShippingMethod.optionName;
         cartAPI.addOrUpdateShipment($scope.checkout.shipment, function () {
             $state.go('checkout_payment');
-        });
+        }, function () { $scope.checkout.shippingMethodProcessing = false; });
     };
 
     function initialize() {
@@ -147,16 +149,14 @@ angular.module('virtoshopApp')
         cartAPI.getCart(function (cart) {
             $scope.checkout.shipment = _.last(cart.shipments);
 
-            getAvailableShippingMethods();
-        });
-    }
-
-    function getAvailableShippingMethods() {
-        cartAPI.getAvailableShippingMethods({ shipmentId: $scope.checkout.shipment.id }, function (availableShippingMethods) {
-            $scope.checkout.availableShippingMethods = availableShippingMethods;
-            if (availableShippingMethods.length == 1) {
-                $scope.checkout.shipment.shipmentMethodCode = availableShippingMethods[0].shipmentMethodCode;
-            }
+            cartAPI.getAvailableShippingMethods({ shipmentId: $scope.checkout.shipment.id }, function (availableShippingMethods) {
+                $scope.checkout.availableShippingMethods = availableShippingMethods;
+                if (availableShippingMethods.length == 1) {
+                    $scope.checkout.selectedShippingMethod = availableShippingMethods[0];
+                } else if ($scope.checkout.shipment.shipmentMethodCode) {
+                    $scope.checkout.selectedShippingMethod = _.findWhere(availableShippingMethods, { shipmentMethodCode: $scope.checkout.shipment.shipmentMethodCode, optionName: $scope.checkout.shipment.shipmentMethodOption });
+                }
+            });
         });
     }
 

@@ -4,7 +4,7 @@
 <ion-view view-title="Payment">
     <ion-content class="checkout">
         <ion-list>
-            <ion-radio ng-model="checkout.paymentMethodCode" ng-value="data.gatewayCode" ng-repeat="data in checkout.availablePaymentMethods">
+            <ion-radio ng-model="checkout.paymentMethodCode" ng-value="data.gatewayCode" ng-repeat="data in checkout.availablePaymentMethods | orderBy:'priority'">
                 {{data.name}}
                 <p class="text-hint">{{data.description}}</p>
             </ion-radio>
