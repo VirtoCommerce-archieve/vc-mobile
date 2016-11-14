@@ -15,8 +15,8 @@
                         <a href="#" class="trash" ng-click="removeLineItem(data.id)">
                             <i class="ion-trash-a"></i>
                         </a>
-                        <div class="pull-right">{{data.extendedPrice.formatedAmount}}</div>
-                        <div class="pull-right" ng-if="data.quantity>1">{{data.placedPrice.formatedAmount}} * {{data.quantity}} =&nbsp;</div>
+                        <div class="pull-right">{{data.extendedPrice.formattedAmount}}</div>
+                        <div class="pull-right" ng-if="data.quantity>1">{{data.placedPrice.formattedAmount}} * {{data.quantity}} =&nbsp;</div>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
             </div>-->
             <div class="item stable-bg">
                 <b>Subtotal</b>
-                <div class="pull-right">{{cart.subTotal.formatedAmount}}</div>
+                <div class="pull-right">{{cart.subTotal.formattedAmount}}</div>
             </div>
         </div>
         <!-- Checkout button -->

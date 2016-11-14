@@ -6,7 +6,7 @@
         <ion-list>
             <ion-radio ng-model="checkout.selectedShippingMethod" ng-value="data" ng-repeat="data in checkout.availableShippingMethods">
                 {{data.name}}
-                <p class="text-hint">{{data.price.formatedAmount}}<span ng-if="data.optionDescription"> - {{data.optionDescription}}</span></p>
+                <p class="text-hint">{{data.price.formattedAmount}}<span ng-if="data.optionDescription"> - {{data.optionDescription}}</span></p>
             </ion-radio>
         </ion-list>
         <!-- Shipping address-->

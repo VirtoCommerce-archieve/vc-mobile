@@ -29,7 +29,6 @@ angular.module('virtoshopApp', ['ionic', 'ngResource', 'ion-autocomplete'])
 })
 
 .constant('virtoshopApp.apiConfig', {
-    catalogId: '25f5ea1b52e54ec1aa903d44cc889324',
     // :storeId/storefrontapi/
     // for debug, when proxy is used
     //baseUrl: 'Clothing/storefrontapi/'

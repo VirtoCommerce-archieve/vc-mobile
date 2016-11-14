@@ -13,7 +13,7 @@
     {
       "path": "/Clothing/storefrontapi",
       "proxyUrl": "http://demo.virtocommerce.com/Clothing/storefrontapi",
-      "proxyUrldd": "http://localhost/storefront/Clothing/storefrontapi"
+      "_proxyUrl": "http://localhost/storefront/Clothing/storefrontapi"
     }
   ]
 }

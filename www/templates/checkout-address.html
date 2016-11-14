@@ -32,7 +32,7 @@
                            items-clicked-method="selectCountry(callback)"
                            selected-items-label="Selected country:" />
                 </div>
-                <div class="item">
+                <div class="item" ng-if="checkout.countryRegions.length">
                     <input ion-autocomplete type="text" readonly="readonly" class="ion-autocomplete" autocomplete="off" max-selected-items="1" placeholder="Region"
                            ng-model="checkout.shipment.deliveryAddress.regionName"
                            item-value-key="name"

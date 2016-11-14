@@ -4,7 +4,7 @@
 <ion-view view-title="Payment">
     <ion-content class="checkout">
         <ion-list>
-            <ion-radio ng-model="checkout.paymentMethodCode" ng-value="data.gatewayCode" ng-repeat="data in checkout.availablePaymentMethods | orderBy:'priority'">
+            <ion-radio ng-model="checkout.paymentMethodCode" ng-value="data.code" ng-repeat="data in checkout.availablePaymentMethods | orderBy:'priority'">
                 {{data.name}}
                 <p class="text-hint">{{data.description}}</p>
             </ion-radio>
@@ -33,17 +33,17 @@
             </div>-->
         </div>
         <div class="item">
-            <div>Subtotal<div class="pull-right">{{checkout.subTotal.formatedAmount}}</div></div>
-            <div>Discount<div class="pull-right">{{checkout.discountTotal.formatedAmount}}</div></div>
-            <div>Shipping<div class="pull-right">{{checkout.shippingTotal.formatedAmount}}</div></div>
-            <div>Taxes<div class="pull-right">{{checkout.taxTotal.formatedAmount}}</div></div>
+            <div>Subtotal<div class="pull-right">{{checkout.cart.subTotal.formattedAmount}}</div></div>
+            <div>Discount<div class="pull-right">{{checkout.cart.discountTotal.formattedAmount}}</div></div>
+            <div>Shipping<div class="pull-right">{{checkout.cart.shippingTotal.formattedAmount}}</div></div>
+            <div>Taxes<div class="pull-right">{{checkout.cart.taxTotal.formattedAmount}}</div></div>
         </div>
         <div class="item stable-bg">
             <b>Total</b>
-            <div class="pull-right">{{checkout.total.formatedAmount}}</div>
+            <div class="pull-right">{{checkout.cart.total.formattedAmount}}</div>
         </div>
         <div class="padding">
-            <button class="button button-block button-energized" ng-click="completeOrder()" ng-disabled="!checkout.paymentMethodCode || checkout.orderProcessing">
+            <button class="button button-block button-energized" ng-click="createOrder()" ng-disabled="!checkout.paymentMethodCode || checkout.loading">
                 Submit order
             </button>
         </div>

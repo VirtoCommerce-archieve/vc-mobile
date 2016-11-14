@@ -15,9 +15,7 @@ angular.module('virtoshopApp')
 
     // list categories
     searchAPI.categoriesSearch({
-        catalogId: apiConfig.catalogId,
         sortBy: "Priority",
-        searchInChildren: false
     }, function (data) {
         $scope.entries = data.categories;
         // workContext.update(data);
@@ -50,8 +48,7 @@ angular.module('virtoshopApp')
 
     function loadDataPage() {
         searchAPI.search({
-            catalogId: apiConfig.catalogId,
-            categoryId: $stateParams.id,
+            outline: $stateParams.id,
             page: pageSettings.currentPage
             //skip: (pageSettings.currentPage - 1) * pageSettings.itemsPerPageCount,
             //take: pageSettings.itemsPerPageCount
@@ -70,7 +67,7 @@ angular.module('virtoshopApp')
                     return {
                         catalogId: x.catalogId,
                         categoryId: x.categoryId,
-                        id: x.id,
+                        id: x.id
                     };
                 });
 

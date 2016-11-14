@@ -29,7 +29,7 @@ angular.module('virtoshopApp')
         getAvailableShippingMethods: { url: apiConfig.baseUrl + 'cart/shipments/:shipmentId/shippingmethods', isArray: true },
         addOrUpdateShipment: { url: apiConfig.baseUrl + 'cart/shipments', method: 'POST' },
         getAvailablePaymentMethods: { url: apiConfig.baseUrl + 'cart/paymentmethods', isArray: true },
-        setPaymentMethod: { url: apiConfig.baseUrl + 'cart/payments', method: 'POST' },
+        addOrUpdatePayment: { url: apiConfig.baseUrl + 'cart/payments', method: 'POST' },
         createOrder: { url: apiConfig.baseUrl + 'cart/createorder', method: 'POST' }
     });
 }])
