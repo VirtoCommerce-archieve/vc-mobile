@@ -24,7 +24,7 @@ The site http://localhost:8100/ionic-lab opens in browser with iOS and Android d
 
 [Install the Ionic CLI]: <http://ionicframework.com/docs/cli/install.html>
 [Ionic CLI service proxy]: <http://ionicframework.com/docs/cli/test.html>
-[Setting Virto Commerce Platform]: <http://docs.virtocommerce.com/display/vc2devguide/Source+Code+Getting+Started>
+[Setting Virto Commerce Platform]: <https://virtocommerce.com/docs/vc2devguide/deployment/platform-deployment/source-code-getting-started>
 
 Advanced configuration with device emulation
 --------------
